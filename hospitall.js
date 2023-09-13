@@ -12,7 +12,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			controller: 'RegistrationController'
 		})
 
-		$urlRouterProvider.otherwise('/register');
+		$urlRouterProvider.otherwise('/home');
 }]);
 
 app.controller('HomeController',function($scope,$http,$window,$state){
