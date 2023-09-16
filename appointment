@@ -1,0 +1,58 @@
+<div ng-app="App" ng-controller="AppointmentController">
+    <div class="col py-3">
+
+        <h3 class=" mt-5 text-lg-center">Appointment Booking</h3>
+    
+    
+<div class="card bg-white text-dark">
+    <div class="container">
+        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+            <div style="margin-left: 5%; margin-top: 3%;">
+                <h5> Date</h5>
+                <div class="col">
+                  <div class="input-group flex-nowrap">
+                  <input type="date" class="p-3 form-control border" ng-model="date" placeholder="Date" aria-label="date" aria-describedby="addon-wrapping">
+                  </div>
+                </div>
+            </div>
+            <div style="margin-left: 12%; margin-top: 3%;">
+                <h5>Department :-</h5>
+                <div class="input-group flex-nowrap">
+                  <select class="p-3 form-select " ng-model="department" style="width: 100%;" aria-label="Default select example">
+                    <option selected>Select Department</option>
+                    <option value="Cardiologists">Cardiologists</option>
+                    <option value="Neurologists">Neurologists</option>
+                    <option value="Psychiatrists">Psychiatrists</option>
+                    <option value="Sleep Medicine Specialists">Sleep Medicine Specialists</option>
+                    <option value="Ophthalmologists">Ophthalmologists</option>
+                    <option value="Pathologists">Pathologists</option>
+                  </select>                
+                 </div>
+            </div>
+    
+            <div style="margin-left: 12%; margin-top: 3%;">
+                <h5>Reports :-</h5>
+                <div class="input-group flex-nowrap">
+                  <input type="file" class="p-3 form-control border" ng-model="reports" placeholder="Reports" aria-label="report" aria-describedby="addon-wrapping">
+                </div>
+            </div>
+    
+            <div style="margin-top: 5%; margin-left: 5%;">
+                <h5>Details :-</h5>
+                <div class="input-group flex-nowrap">
+                  <select class="p-3 form-select " ng-model="history" style="width: 100%;" aria-label="Default select example">
+                    <option selected>Prolems</option>
+                    <option value="Atheromatous ">Atheromatous disease</option>
+                    <option value="Cancer">Cancer</option>
+                    <option value="Diabetes">Diabetes</option>
+                    <option value="Cough">Cough</option>
+                    <option value="Fever">Fever</option>
+                  </select>                
+                 </div>
+            </div>
+        </div>
+           <button type="button" class="btn btn-success mb-3" ng-click="appoint" style="margin-left: 45%; width: 15%; height: 50px;">Book Appointment</button>
+         </div>
+      </div>
+   </div>
+</div>

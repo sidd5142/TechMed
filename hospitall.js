@@ -11,6 +11,17 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			templateUrl: 'register.html',
 			controller: 'RegistrationController'
 		})
+		.state('LogIn', {
+            url: '/login',
+			templateUrl: 'new1.html',
+			controller: 'LogInController'
+		})
+		.state('PatienceDash', {
+            url: '/dashboard',
+			templateUrl: 'dashboard.html',
+			controller: 'DashboardPatController'
+		})
+
 
 		$urlRouterProvider.otherwise('/register');
 }]);
@@ -36,7 +47,6 @@ app.controller('RegistrationController',function($scope,$http,$window,$state){
 	$scope.validatePassword = function(){
 		$scope.passwordMismatch = $scope.password !== $scope.confpassword;
 	  }
-
 
 	 $scope.register = function(){
 		var pass = $scope.password;
@@ -65,7 +75,7 @@ app.controller('RegistrationController',function($scope,$http,$window,$state){
           .then(function(response){
             
             console.log(response.data)
-			$state.go('Login');
+			$state.go('LogIn');
 		  })
 		  .catch(function(error){
 			$window.alert(error);
@@ -78,3 +88,32 @@ app.controller('RegistrationController',function($scope,$http,$window,$state){
 
 	 } 
 });
+
+app.controller('LogInController',function($scope,$http,$window,$state){
+
+	 $scope.signin = function(){
+
+		var regdata = {
+            email : $scope.email,
+			password : $scope.password
+		};
+		console.log(regdata);
+			
+			$http.post('https://10.21.83.100:8000/api/login_view/', regdata, {
+			headers: {'Content-Type': undefined},
+		    withCredentials: true
+		})
+          .then(function(response){
+            
+            console.log(response.data)
+			$state.go('PatienceDash');
+		  })
+		  .catch(function(error){
+			$window.alert(error);
+		  })
+		}
+	 } );
+
+	 app.controller('DashboardPatController',function($scope,$http,$window,$state){
+
+	 });

@@ -16,7 +16,8 @@
     "angular-ui-router": "^1.0.30",
     "bootstrap": "^5.3.1",
     "bootstrap-icons": "^1.11.0",
-    "jquery": "^3.7.1"
+    "jquery": "^3.7.1",
+    "sweetalert2": "^11.7.28"
   },
   "devDependencies": {},
   "repository": {
