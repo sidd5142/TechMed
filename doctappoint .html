@@ -1,0 +1,72 @@
+<div ng-app="App" ng-controller="DoctAppointmentController">
+    <!-- <div class="col py-3"> -->
+  
+    <h3 class=" mt-5 text-lg-center">Appointments</h3>
+  
+  
+  <div class="card bg-white text-dark">
+  <div class="container">
+  <div class="row row-cols-2 row-cols-lg-4">
+    <div style=" margin-top: 3%; margin-left: 5%;">
+        <h5> Doctor_id :-</h5>
+  <div class="col">
+    <div class="input-group flex-nowrap">
+      <input type="number" class="p-3 form-control border" ng-model="id" placeholder="Doctor Id" aria-describedby="addon-wrapping">
+    </div>
+    </div>
+    </div>
+    <div style="margin-left: 8%; margin-top: 3%;">
+        <h5>Payment Status :-</h5>
+        <div class="input-group flex-nowrap">
+          <select class="p-3 form-select " ng-model="paystatus" style="width: 100%;" aria-label="Default select example">
+            <option selected>Select status</option>
+            <option value="1">Confirmed</option>
+            <option value="0">Not Confirmed</option>          
+          </select>                
+         </div>
+    </div>
+  
+    <div style="margin-left: 8%; margin-top: 3%;">
+        <h5>Amount :-</h5>
+        <div class="input-group flex-nowrap">
+          <input type="number" class="p-3 form-control border" ng-model="reports" placeholder="Reports" aria-label="report" aria-describedby="addon-wrapping">
+        </div>
+    </div>
+  
+    <div style=" margin-top: 3%; margin-left: 5%;">
+      <h5> Medical History :-</h5>
+  <div class="col">
+  <div class="input-group flex-nowrap">
+    <input type="text" class="p-3 form-control border" ng-model="History" aria-describedby="addon-wrapping">
+  </div>
+  </div>
+  </div>
+  
+    <div style=" margin-top: 3%; margin-left: 8%;">
+      <h5>Appointment Date :-</h5>
+  <div class="col">
+  <div class="input-group flex-nowrap">
+    <input type="date" class="p-3 form-control border" ng-model="appointment"  aria-label="date" aria-describedby="addon-wrapping">
+  </div>
+  </div>
+  </div>
+  
+  <div style="margin-left: 8%; margin-top: 3%;">
+    <h5>Appointment Slot :-</h5>
+    <div class="input-group flex-nowrap">
+      <select class="p-3 form-select " ng-model="slot" style="width: 100%;" aria-label="Default select example">
+        <option selected>Select slot</option>
+        <option value="10-12">10 am - 12 noon</option>
+        <option value="4-8">4 pm - 8 pm</option>          
+      </select>                
+     </div>
+  </div>
+  
+  
+  
+  </div>
+  <button type="button" class="btn btn-success mb-3" ng-click="appoint" style="margin-left: 45%; width: 15%; height: 50px; margin-top: 2%;">Book Appointment</button>
+  
+  </div>
+  <!-- </div> -->
+  </div>
