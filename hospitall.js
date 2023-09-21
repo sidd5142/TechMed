@@ -8,7 +8,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		})
         .state('Register', {
             url: '/register',
-			templateUrl: 'register.html',
+			templateUrl: 'registration.html',
 			controller: 'RegistrationController'
 		})
 		.state('LogIn', {
@@ -33,7 +33,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		})
 		.state('DoctRegister', {
             url: '/doctregister',
-			templateUrl: 'doctregist.html',
+			templateUrl: 'doctreg.html',
 			controller: 'DoctRegistrationController'
 		})
 		.state('DoctInformation', {
