@@ -1,64 +1,75 @@
  
-<div ng-app="App" ng-controller="DoctorInfoController">     
-    <div class="col py-3">
+<div ng-app="App" ng-controller="DoctPersonalController">     
     
-        <h3 class=" mt-5 text-lg-center">Doctor Information</h3>
-        
-        
-        <div class="card bg-white text-dark">
-        <div class="container">
-            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-                <div style="margin-left: 5%; margin-top: 3%;">
-                    <h5> First Name :-</h5>
-              <div class="col">
-                <div class="p-3 border bg-light">Doctor</div>
-              </div>
-                </div>
-                <div style="margin-left: 12%; margin-top: 3%;">
-                    <h5>Last Name :-</h5>
-              <div class="col">
-                <div class="p-3 border bg-light">ydv</div>
-              </div>
-                </div>
-        
-                <div style="margin-left: 12%; margin-top: 3%;">
-                    <h5>Age :-</h5>
-              <div class="col">
-                <div class="p-3 border bg-light">20</div>
-              </div>
-                </div>
-        
-                <div style="margin-top: 5%; margin-left: 5%;">
-                    <h5>Gender :-</h5>
-              <div class="col">
-                <div class="p-3 border bg-light">Male</div>
-              </div>
-                </div>
-        
-        
-                <div style="margin-left: 12%; margin-top: 5%;">
-                    <h5>Phone Number :-</h5>
-              <div class="col">
-                <div class="p-3 border bg-light">956967615</div>
-              </div>
-            </div>
-        
-            <div style="margin-left: 12%; margin-top: 5%;">
-                <h5>City :-</h5>
-              <div class="col">
-                <div class="p-3 border bg-light">DELHI</div>
-              </div>
-            </div>
-    
-        
-            <div style="margin-left: 12%; margin-top: 5%; margin-bottom: 2%;">
-                <h5>Blood Group :-</h5>
-              <div class="col">
-                <div class="p-3 border bg-light">A+</div>
-              </div>
-            </div>
+  <h3 style="margin-left: 35%; margin-top: 3%;">Doctor Information</h3>
+  
+  
+  <div class="card bg-white text-dark">
+  <!-- <div class="container"> -->
+      <div class="row row-cols-2 row-cols-lg-5" ng-repeat="info in doctinfo">
+          <div style="margin-left: 5%; margin-top: 3%;">
+              <h5> First Name :-</h5>
+        <div class="col">
+          <div class="p-3 border bg-light">{{info.user__first_name}}</div>
+        </div>
           </div>
+          <div style="margin-left: 12%; margin-top: 3%;">
+              <h5>Last Name :-</h5>
+        <div class="col">
+          <div class="p-3 border bg-light">{{info.user__last_name}}</div>
         </div>
+          </div>
+  
+          <div style="margin-left: 12%; margin-top: 3%;">
+              <h5>Age :-</h5>
+        <div class="col">
+          <div class="p-3 border bg-light">{{info.user__age}}</div>
         </div>
+          </div>
+  
+          <div style="margin-top: 5%; margin-left: 5%;">
+              <h5>Gender :-</h5>
+        <div class="col">
+          <div class="p-3 border bg-light">{{info.user__gender}}</div>
+        </div>
+          </div>
+  
+  
+          <div style="margin-left: 12%; margin-top: 5%;">
+              <h5>Phone Number :-</h5>
+        <div class="col">
+          <div class="p-3 border bg-light">{{info.user__contact}}</div>
+        </div>
+      </div>
+  
+      <div style="margin-left: 12%; margin-top: 5%;">
+          <h5>Address :-</h5>
+        <div class="col">
+          <div class="p-3 border bg-light">{{info.user__address}}</div>
+        </div>
+      </div>
+  
+      <div style="margin-left: 5%; margin-top: 5%; margin-bottom: 2%;">
+          <h5>Qualification :-</h5>
+        <div class="col">
+          <div class="p-3 border bg-light">{{info.qualification}}</div>
+        </div>
+      </div>
+
+      <div style="margin-left: 12%; margin-top: 5%; margin-bottom: 2%;">
+          <h5>Department :-</h5>
+        <div class="col">
+          <div class="p-3 border bg-light">{{info.department__departments}}</div>
+        </div>
+      </div>  
+  
+      <div style="margin-left: 12%; margin-top: 5%; margin-bottom: 2%;">
+          <h5>Fees :-</h5>
+        <div class="col">
+          <div class="p-3 border bg-light">{{info.doctorFee}}</div>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+
+

@@ -7,14 +7,25 @@
 <div class="card bg-white text-dark">
 <div class="container">
 <div class="row row-cols-2 row-cols-lg-4">
-  <div style=" margin-top: 3%; margin-left: 5%;">
-      <h5> Doctor_id :-</h5>
-<div class="col">
-  <div class="input-group flex-nowrap">
-    <input type="number" class="p-3 form-control border" ng-model="id" placeholder="Doctor Id" aria-describedby="addon-wrapping">
-  </div>
-  </div>
-  </div>
+  <div style="margin-left: 8%; margin-top: 3%;">
+    <h5>Department :-</h5>
+    <div class="input-group flex-nowrap">
+      <select class="p-3 form-select " ng-model="selectdepartment" style="width: 100%;" aria-label="Default select example">
+        <option selected>Select Department</option>
+        <option value="{{departs.id}}" ng-repeat="departs in depart" ng-click="selectdepart(departs)">{{departs.Department}}</option>
+          </select>                
+     </div>
+</div>
+
+  <div style="margin-left: 5%; margin-top: 3%;">
+    <h5>Doctor :-</h5>
+    <div class="input-group flex-nowrap">
+      <select class="p-3 form-select " ng-model="selectcat" style="width: 100%;" aria-label="Default select example">
+        <option selected>Select Department</option>
+        <option value="{{category.Doctor}}" ng-repeat="category in categories" ng-click="selectcat(category)">Dr. {{category.Doctor__first_name + " " + category.Doctor__last_name}}</option>
+          </select>                
+     </div>
+</div>
   <div style="margin-left: 8%; margin-top: 3%;">
       <h5>Payment Status :-</h5>
       <div class="input-group flex-nowrap">
@@ -29,7 +40,7 @@
   <div style="margin-left: 8%; margin-top: 3%;">
       <h5>Amount :-</h5>
       <div class="input-group flex-nowrap">
-        <input type="number" class="p-3 form-control border" ng-model="reports" placeholder="Reports" aria-label="report" aria-describedby="addon-wrapping">
+        <input type="number" class="p-3 form-control border" ng-model="amount" placeholder="Amount" aria-label="report" aria-describedby="addon-wrapping">
       </div>
   </div>
 
@@ -37,7 +48,7 @@
     <h5> Medical History :-</h5>
 <div class="col">
 <div class="input-group flex-nowrap">
-  <input type="text" class="p-3 form-control border" ng-model="History" aria-describedby="addon-wrapping">
+  <input type="text" class="p-3 form-control border" ng-model="history" aria-describedby="addon-wrapping">
 </div>
 </div>
 </div>
@@ -65,7 +76,7 @@
 
 
 </div>
-<button type="button" class="btn btn-success mb-3" ng-click="appoint" style="margin-left: 45%; width: 15%; height: 50px; margin-top: 2%;">Book Appointment</button>
+<button type="button" class="btn btn-success mb-3" ng-click="appoint()" style="margin-left: 45%; width: 15%; height: 50px; margin-top: 2%;">Book Appointment</button>
 
 </div>
 <!-- </div> -->

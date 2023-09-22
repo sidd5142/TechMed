@@ -1,72 +1,74 @@
-<div ng-app="App" ng-controller="DoctAppointmentController">
-    <!-- <div class="col py-3"> -->
+<div ng-app="myApp" ng-controller="DoctAppointController">
+  <div class="col mt-lg-3">
+      <div class="container">
+          <div class="row">
+              <div class="col">
+                  <h3 style="font-size: 40px;">Patient  Appointment</h3>
+              </div>
+              <div class="col">
+              <form class="d-flex" style="position: relative; left: 20%;margin-top: 2%;">
+                  <input class="form-control me-2"  type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+              </div>
+              <div class="col" >
+                  <button type="button" style="position: relative; left: 50%;" class="btn btn-secondary btn-lg">Appointment</button>
+              </div>
+          </div>
   
-    <h3 class=" mt-5 text-lg-center">Appointments</h3>
+          <hr>
   
-  
-  <div class="card bg-white text-dark">
-  <div class="container">
-  <div class="row row-cols-2 row-cols-lg-4">
-    <div style=" margin-top: 3%; margin-left: 5%;">
-        <h5> Doctor_id :-</h5>
-  <div class="col">
-    <div class="input-group flex-nowrap">
-      <input type="number" class="p-3 form-control border" ng-model="id" placeholder="Doctor Id" aria-describedby="addon-wrapping">
-    </div>
-    </div>
-    </div>
-    <div style="margin-left: 8%; margin-top: 3%;">
-        <h5>Payment Status :-</h5>
-        <div class="input-group flex-nowrap">
-          <select class="p-3 form-select " ng-model="paystatus" style="width: 100%;" aria-label="Default select example">
-            <option selected>Select status</option>
-            <option value="1">Confirmed</option>
-            <option value="0">Not Confirmed</option>          
-          </select>                
-         </div>
-    </div>
-  
-    <div style="margin-left: 8%; margin-top: 3%;">
-        <h5>Amount :-</h5>
-        <div class="input-group flex-nowrap">
-          <input type="number" class="p-3 form-control border" ng-model="reports" placeholder="Reports" aria-label="report" aria-describedby="addon-wrapping">
-        </div>
-    </div>
-  
-    <div style=" margin-top: 3%; margin-left: 5%;">
-      <h5> Medical History :-</h5>
-  <div class="col">
-  <div class="input-group flex-nowrap">
-    <input type="text" class="p-3 form-control border" ng-model="History" aria-describedby="addon-wrapping">
+          <table class="table caption-top ">
+             <caption>Patient ID :-</caption>
+             <thead class="bg-dark table-dark">
+               <tr>
+                 <th scope="col">Patient Id</th>
+                 <th scope="col">First Name</th>
+                 <th scope="col">Age</th>
+                 <th scope="col">Gender</th>
+                 <th scope="col">Date Assign</th>
+                 <th scope="col">Time Assign</th>
+                 <th scope="col">Accept/Reject</th>
+                 <th scope="col">Edit</th>
+               </tr>
+             </thead>
+             <tbody>
+               <tr ng-repeat="appoint in doctappoint">
+                 <th scope="row">1564646465</th>
+                 <td>{{appoint.user__first_name + " " + appoint.user__last_name}}</td>
+                 <td>{{appoint.user__age}}</td>
+                 <td>{{appoint.user__gender}}</td>
+                 <td>{{appoint.appointmentDate}}</td>
+                 <td>{{appoint.time}}</td>
+                 <td><button type="button" class="btn btn-primary btn-sm">Accept</button>
+                  <button type="button" class="btn btn-secondary btn-sm">Reject</button>
+                </td>
+                 <td>  <button class="btn btn-primary" type="button">Edit</button></td>
+               </tr>
+               <!-- <tr>
+                 <th scope="row">264484864</th>
+                 <td>Jacob</td>
+                 <td>Thornton</td>
+                 <td>@fat</td>
+                 <td>02/05/23</td>
+                 <td>4:00 pm</td>
+                 <td><button type="button" class="btn btn-primary btn-sm">Accept</button>
+                  <button type="button" class="btn btn-secondary btn-sm">Reject</button></td>
+                 <td>  <button class="btn btn-primary" type="button">Edit</button></td>
+               </tr>
+               <tr>
+                 <th scope="row">36468464</th>
+                 <td>Larry</td>
+                 <td>the Bird</td>
+                 <td>@twitter</td>
+                 <td>25/02/23</td>
+                 <td>6:00 pm</td>
+                 <td><button type="button" class="btn btn-primary btn-sm">Accept</button>
+                  <button type="button" class="btn btn-secondary btn-sm">Reject</button></td>
+                 <td>  <button class="btn btn-primary" type="button">Edit</button></td>
+               </tr> -->
+             </tbody>
+           </table>
+      </div>
   </div>
-  </div>
-  </div>
-  
-    <div style=" margin-top: 3%; margin-left: 8%;">
-      <h5>Appointment Date :-</h5>
-  <div class="col">
-  <div class="input-group flex-nowrap">
-    <input type="date" class="p-3 form-control border" ng-model="appointment"  aria-label="date" aria-describedby="addon-wrapping">
-  </div>
-  </div>
-  </div>
-  
-  <div style="margin-left: 8%; margin-top: 3%;">
-    <h5>Appointment Slot :-</h5>
-    <div class="input-group flex-nowrap">
-      <select class="p-3 form-select " ng-model="slot" style="width: 100%;" aria-label="Default select example">
-        <option selected>Select slot</option>
-        <option value="10-12">10 am - 12 noon</option>
-        <option value="4-8">4 pm - 8 pm</option>          
-      </select>                
-     </div>
-  </div>
-  
-  
-  
-  </div>
-  <button type="button" class="btn btn-success mb-3" ng-click="appoint" style="margin-left: 45%; width: 15%; height: 50px; margin-top: 2%;">Book Appointment</button>
-  
-  </div>
-  <!-- </div> -->
-  </div>
+            

@@ -11,9 +11,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			templateUrl: 'registration.html',
 			controller: 'RegistrationController'
 		})
-		.state('LogIn', {
+		.state('LogIn', {	
             url: '/login',
-			templateUrl: 'new1.html',
+			templateUrl: 'login.html',
 			controller: 'LogInController'
 		})
 		.state('Dashboard', {
@@ -27,9 +27,14 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			controller: 'AppointmentController'
 		})
 		.state('Dashboard.PatientInfo', {
-            url: '/patinetinfo',
+            url: '/patientinfo',
 			templateUrl: 'patientinfo.html',
 			controller: 'PatientinfoController'
+		})
+		.state('Dashboard.Record', {
+            url: '/patientreco',
+			templateUrl: 'patientrecord.html',
+			controller: 'PatientRecoController'
 		})
 		.state('DoctRegister', {
             url: '/doctregister',
@@ -49,6 +54,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 
 		$urlRouterProvider.otherwise('/doctregister');
 }]);
+
+var api = 'https://10.21.86.132:8000/api/'
 
 app.controller('HomeController',function($scope,$http,$window,$state){
 
@@ -90,9 +97,9 @@ app.controller('RegistrationController',function($scope,$http,$window,$state){
 		};
 		console.log(regdata);
 
-		if(pass == confpass){
+		// if(pass == confpass){
 			
-			$http.post('https://10.21.84.51:8000/api/PatientRegisteration/', regdata, {
+			$http.post(api+'PatientRegisteration/', regdata, {
 			headers: {'Content-Type': undefined},
 		    withCredentials: true
 		})
@@ -115,21 +122,21 @@ app.controller('RegistrationController',function($scope,$http,$window,$state){
 			  })
 		  })
 		}
-		else{
-			// $window.alert('Incorrect Password');
-			Swal.fire({
-				icon: 'error',
-				title: 'Oops...',
-				text: 'Incorrect Password '
-			  })
-		}
+		// else{
+		// 	// $window.alert('Incorrect Password');
+		// 	Swal.fire({
+		// 		icon: 'error',
+		// 		title: 'Oops...',
+		// 		text: 'Incorrect Password '
+		// 	  })
+		// }
 
-	 } 
+	 
 });
 
 app.controller('LogInController',function($scope,$http,$window,$state){
 
-	 $scope.signin = function(){
+	 $scope.login = function(){
 
 		var regdata = {
             email : $scope.email,
@@ -137,13 +144,13 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		};
 		console.log(regdata);
 			
-			$http.post('https://10.21.84.51:8000/api/login_view/', regdata, {
+			$http.post(api+'login_view/', regdata, {
 			// headers: {'Content-Type': undefined},
 		    withCredentials: true
 		})
           .then(function(response){
             
-            console.log(response.data)
+            console.log(response)
 			Swal.fire({
 				icon: 'success',
 				title: 'Congrats...',
@@ -164,32 +171,73 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 
 	 app.controller('DashboardPatController',function($scope,$http,$window,$state){
 		$scope.patients = [];
-		$scope.patient = [];
+		$scope.panels = [];
 	
-		// $http.get('https://10.21.84.51:8000/api/getpatient/', {
-		// 	withCredentials: true
-		// })
-		// .then(function(response){
-		// 	 console.log(response);
-		// 	 $scope.patient = response.data
-		// 	 console.log($scope.patient)
-		// 	//  console.log($scope.patient[0].first_name)
+		$http.get(api+'home_page	/', {
+			withCredentials: true
+		})
+		.then(function(response){
+			 console.log(response);
+			 $scope.panels = response.data
+			 console.log($scope.panels)
+			//  console.log($scope.patient[0].first_name)
 	
-		// })
-		// .catch(function(error){
-		// 	Swal.fire({
-		// 		icon: 'error',
-		// 		title: 'Oops...',
-		// 		text: 'Something went wrong..'
-		// 	  })
-		// })
+		})
+		.catch(function(error){
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Something went wrong..'
+			  })
+		})
 	 });
 
 	 app.controller('AppointmentController',function($scope,$http,$window,$state){
 		$scope.patient = [];
+		$scope.depart = [];
 
+		$http.get(api+'Doctor_Department/',{
+			withCredentials: true
+		})
+		.then(function(response){
+			console.log(response)
+			$scope.depart = response.data
+			console.log($scope.depart)
+			$scope.categories = [];
+
+			$scope.selectdepart = function(departs){
+				var Data = {department : departs.id};
+				console.log(departs.id)
+                console.log(Data)
+				$http.get(api + 'Doctor_details/', {params : Data},{
+					withCredentials:true
+				})
+				.then(function(response){
+					console.log(response)
+					$scope.categories=response.data
+					console.log($scope.categories)	
+				})
+				.catch(function(error	){
+					console.log(error)
+				})
+			}
+		})
+		.catch(function(error){
+			console.log(error)
+		})
+
+		
 		$scope.appoint = function(){
-			$http.post('https://10.21.84.51:8000/api/' , {
+			var apdata = {
+				amount : $scope.amount,
+				doctor_id : $scope.selectcat,
+				paymentStatus : $scope.paystatus,
+				medical_history : $scope.history,
+				appointment_date : $scope.appointment,
+				appointment_slot : $scope.slot
+			 }
+			 console.log(apdata)
+			$http.post(api + 'patient/' , apdata, {
 				withCredentials : true
 			})
 			.then(function(response){
@@ -212,19 +260,15 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 	 });
 
 	 app.controller('PatientinfoController',function($scope,$http,$window,$state){
-		$http.post('https://10.21.84.51:8000/api/' , {
-			withCredentials : true
-		})
-		$http.get('https://10.21.84.51:8000/api/patientinfo' , {
+		$scope.info = [];
+		$http.get(api+'patient_profile/' , {
 			withCredentials : true
 	})
 		.then(function(response){
 			console.log(response)
-			Swal.fire(
-				'Congrats!',
-				'Appointment Sent!',
-				'success'
-			  )
+			$scope.info = response.data.Profile
+			console.log($scope.info)
+			
 		})
 		.catch(function(error){
 			Swal.fire({
@@ -237,21 +281,75 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 	 });
 
 	 app.controller('DoctRegistrationController',function($scope,$http,$window,$state){
+		$scope.depart = [];
+		$scope.departs = [];
 
-		// $scope.depart = [];
-		// $scope.departs = [];
+		$http.get(api+'Doctor_Department/', {
+			withCredentials : true
+		})
+		.then(function(response){
+			console.log(response);
+			$scope.depart = response.data
+			console.log($scope.depart)
+		})
+		
+		$scope.doctregister = function(){
 
-		$http.get('https://10.21.84.51:8000/api/Doctor_Department/' , {
+			var doctdata = {
+				username : $scope.username,
+				first_name : $scope.firstname,
+				last_name : $scope.lastname,
+				email : $scope.email,
+				password : $scope.password,
+				phone_no : $scope.contact,
+				department : $scope.department,
+				qualification : $scope.qualification,
+				morning_time : $scope.morningtime,
+				evening_time : $scope.eveningtime
+			}
+			console.log(doctdata)
+
+		$http.post(api+'DoctorRegistration/' , doctdata, {
 			withCredentials : true
 		})
 		.then(function(response){
 			console.log(response);
 			$scope.departs = response.data;
 			console.log($scope.departs);
-			$scope.department = "";
+			Swal.fire({
+				icon: 'success',
+				title: 'Congrats',
+				text: 'You are Logged in..'
+			  })
+		})
+		.catch(function(error){
+			console.log(error)
+				Swal.fire({
+					icon: 'error',
+					title: 'Oops...',
+					text: 'Something went wrong..'
+				  })
+			
+		})
+	 }
+	})
+
+
+	app.controller('PatientRecoController',function($scope,$http,$window,$state){
+		$scope.record = [];
+
+		$http.get(api+'patient/', {
+			withCredentials: true
+		})
+		.then(function(response){
+			console.log(response)
+			$scope.record = response.data;
+			console.log($scope.record);
 		})
 		.catch(function(error){
 			console.log(error)
 		})
-	 })
+	})
+
+	
 		  

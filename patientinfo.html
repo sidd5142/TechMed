@@ -7,31 +7,31 @@
         
         <div class="card bg-white text-dark">
         <div class="container">
-            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+            <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3" ng-repeat="infos in info">
                 <div style="margin-left: 5%; margin-top: 3%;">
                     <h5> First Name :-</h5>
               <div class="col">
-                <div class="p-3 border bg-light">Patient </div>
+                <div class="p-3 border bg-light">{{infos.Patient__first_name}}</div>
               </div>
                 </div>
                 <div style="margin-left: 12%; margin-top: 3%;">
                     <h5>Last Name :-</h5>
               <div class="col">
-                <div class="p-3 border bg-light">ydv</div>
+                <div class="p-3 border bg-light">{{infos.Patient__last_name}}</div>
               </div>
                 </div>
         
                 <div style="margin-left: 12%; margin-top: 3%;">
                     <h5>Age :-</h5>
               <div class="col">
-                <div class="p-3 border bg-light">20</div>
+                <div class="p-3 border bg-light">{{infos.Patient_Age}}</div>
               </div>
                 </div>
         
                 <div style="margin-top: 5%; margin-left: 5%;">
                     <h5>Gender :-</h5>
               <div class="col">
-                <div class="p-3 border bg-light">Male</div>
+                <div class="p-3 border bg-light">{{infos.Patient_Gender}}</div>
               </div>
                 </div>
         
@@ -39,14 +39,14 @@
                 <div style="margin-left: 12%; margin-top: 5%;">
                     <h5>Phone Number :-</h5>
               <div class="col">
-                <div class="p-3 border bg-light">956967615</div>
+                <div class="p-3 border bg-light">{{infos.Patient_Contact}}</div>
               </div>
             </div>
         
             <div style="margin-left: 12%; margin-top: 5%;">
-                <h5>City :-</h5>
+                <h5>Address :-</h5>
               <div class="col">
-                <div class="p-3 border bg-light">DELHI</div>
+                <div class="p-3 border bg-light">{{infos.Patient_Address}}</div>
               </div>
             </div>
         
