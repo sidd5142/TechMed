@@ -36,26 +36,31 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			templateUrl: 'patientrecord.html',
 			controller: 'PatientRecoController'
 		})
+		.state('DoctDashboard', {
+            url: '/doctdashboard',
+			templateUrl: 'doctdashboard.html',
+			controller: 'DoctDashboardController'
+		})
 		.state('DoctRegister', {
             url: '/doctregister',
 			templateUrl: 'doctreg.html',
 			controller: 'DoctRegistrationController'
 		})
-		.state('DoctInformation', {
+		.state('DoctDashboard.DoctInformation', {
             url: '/doctinformation',
 			templateUrl: 'doctorinfo.html',
 			controller: 'DoctInformationController'
 		})
-		.state('DoctAppointment', {
-            url: '/doctregister',
-			templateUrl: 'doctregist.html',
-			controller: 'DoctRegistrationController'
+		.state('DoctDashboard.DoctAppointment', {
+            url: '/doctappointment',
+			templateUrl: 'doctappoint.html',
+			controller: 'DoctAppointmentController'
 		})
 
-		$urlRouterProvider.otherwise('/doctregister');
+		$urlRouterProvider.otherwise('/login');
 }]);
 
-var api = 'https://10.21.86.132:8000/api/'
+var api = 'https://10.21.85.13:8000/api/'
 
 app.controller('HomeController',function($scope,$http,$window,$state){
 
@@ -109,9 +114,9 @@ app.controller('RegistrationController',function($scope,$http,$window,$state){
 			Swal.fire({
 				icon: 'success',
 				title: 'Congrats..',
-				text: 'Successfully registered'
+				text: response.data.message
 			  })
-			$state.go('LogIn');
+			$state.go('DoctInformation');
 		  })
 		  .catch(function(error){
 			// $window.alert(error);
@@ -156,7 +161,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 				title: 'Congrats...',
 				text: 'Successfully signed in'
 			  })
-			$state.go('Dashboard');
+			$state.go('DoctDashboard');
 		  })
 		  .catch(function(error){
 			// $window.alert(error);
@@ -350,6 +355,44 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			console.log(error)
 		})
 	})
+
+
+	app.controller('DoctInformationController',function($scope,$http,$window,$state){
+		$scope.doct = [];
+
+		$http.get(api+'doctor_profile/', {
+			withCredentials: true
+		})
+		.then(function(response){
+			console.log(response)
+			$scope.doct = response.data;
+			console.log($scope.doct);
+		})
+		.catch(function(error){
+			console.log(error)
+		})
+	});
+
+
+	app.controller('DoctDashboardController',function($scope,$http,$window,$state){
+	});
+
+	app.controller('DoctAppointmentController',function($scope,$http,$window,$state){
+		$scope.appoint = [];
+
+		$http.get(api+'doctor/', {
+			withCredentials: true
+		})
+		.then(function(response){
+			console.log(response)
+			$scope.appoint=response.data;
+			console.log($scope.appoint);
+		})
+		.catch(function(error){
+			console.log(error)
+		})
+	});
+
 
 	
 		  

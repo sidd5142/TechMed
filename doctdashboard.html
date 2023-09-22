@@ -2,49 +2,98 @@
 <html lang="en">
 <head>
     
-    <title>Document</title>
-    <link rel="stylesheet" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
-    <script src="node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
-    <script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
-    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-      <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-      <script src="node_modules/jquery/dist/jquery.min.js"></script>
-      <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-      <script src="node_modules/angular/angular.js"></script>
-      <script src="node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
+<script src="node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
+<script src="node_modules/jquery/dist/jquery.slim.min.js"></script>
+<script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="node_modules/angular/angular.js"></script>
+  <script src="node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
   <script src="hospitall.js"></script>
 </head>
-<body ng-app="myApp" ng-controller="DashboardPatController">
+<body ng-app="myApp" ng-controller="DoctDashboardController">
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><h3>HEALTHCARE</h3></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page">Home</a>
+              </li>
+              
+            </ul>
+            <!-- <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form> -->
+          </div>
+        </div>
+      </nav>
+
     <div class="container-fluid">
-      <a class="navbar-brand" href="#"><h2>TechMed</h2></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav " style="margin-left: 5%; font-size: 20px;" >
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item" style="margin-left: 10%;">
-            <a class="nav-link active" ui-sref="Dashboard.DoctInfo">Information</a>
-          </li>
-          <li class="nav-item" style="margin-left: 10%;">
-            <a class="nav-link active"  ui-sref="Dashboard.Appointment">Appointment</a>
-          </li>
-          <li class="nav-item" style="margin-left: 10%;">
-            <a class="nav-link active"  ui-sref="Dashboard.Payment">Payment</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+        <div class="row flex-nowrap">
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                    <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                        <span class="fs-5 d-none d-sm-inline">DASHBOARD</span>
+                    </a>
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                       
+                        <li>
+                            <a  class="nav-link px-0 align-middle">
+                                 <span class="ms-1 d-none d-sm-inline" ng-click="dash" ui-sref="DoctDashboard.DoctInformation">Personal Information</span></a>
+                        </li>
+                        <li>
+                            <a  class="nav-link px-0 align-middle">
+                                <span class="ms-1 d-none d-sm-inline" ng-click="appoin" ui-sref="DoctDashboard.DoctAppointment">Appointment</span></a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a  class="nav-link px-0 align-middle">
+                                <span class="ms-1 d-none d-sm-inline" ui-sref="DoctorDashboard.DoctRecord">Records</span> </a>
+                        </li>
 
- <div ui-view="">
-
-  </div>
+                        <li>
+                          <a  class="nav-link px-0 align-middle">
+                              <span class="ms-1 d-none d-sm-inline" ui-sref="DoctorDashboard.Prescriptions">Prescriptions</span> </a>
+                      </li>
+                    </ul>
+                    <hr>
+                    <!-- <div class="dropdown pb-4">
+                        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                            <span class="d-none d-sm-inline mx-1">loser</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                            <li><a class="dropdown-item" href="#">New project...</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>
+                    </div>   -->
+                </div>
+            </div>
+            <div class="col mt-lg-5">
+                <div class="container-fluid" ui-view="">
+                </div>
+            </div>
+ 
+         </div>
+    
+     </div>   
     
 </body>
 </html>
