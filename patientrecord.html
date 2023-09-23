@@ -30,8 +30,8 @@
            <tbody>
              <tr ng-repeat="patient in record">
                <th scope="row">{{$index + 1}}</th>
-               <td>Dr. {{patient.Doc__Doctor_id__first_name + " " + patient.Doc__Doctor_id__last_name}}</td>
-               <td>{{patient.department__departments}}</td>
+               <td>Dr. {{patient.Doctor__Doctor_id__first_name + " " + patient.Doctor__Doctor_id__last_name}}</td>
+               <td>{{patient.Doctor__Department_id__Department}}</td>
                <td>{{patient.Appointment_date}}</td>
                <td>{{patient.Approval_status}}</td>
              </tr>

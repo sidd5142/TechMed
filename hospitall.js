@@ -161,7 +161,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 				title: 'Congrats...',
 				text: 'Successfully signed in'
 			  })
-			$state.go('DoctDashboard');
+			$state.go('Dashboard');
 		  })
 		  .catch(function(error){
 			// $window.alert(error);
