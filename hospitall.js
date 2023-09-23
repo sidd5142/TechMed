@@ -53,7 +53,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 		})
 		.state('DoctDashboard.DoctAppointment', {
             url: '/doctappointment',
-			templateUrl: 'doctappoint.html',
+			templateUrl: 'doctappointment.html',
 			controller: 'DoctAppointmentController'
 		})
 
@@ -378,15 +378,15 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 	});
 
 	app.controller('DoctAppointmentController',function($scope,$http,$window,$state){
-		$scope.appoint = [];
+		$scope.appoints = [];
 
 		$http.get(api+'doctor/', {
 			withCredentials: true
 		})
 		.then(function(response){
 			console.log(response)
-			$scope.appoint=response.data;
-			console.log($scope.appoint);
+			$scope.appoints=response.data;
+			console.log($scope.appoints);
 		})
 		.catch(function(error){
 			console.log(error)

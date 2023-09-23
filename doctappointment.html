@@ -33,9 +33,9 @@
                </tr>
              </thead>
              <tbody>
-               <tr ng-repeat="appoint in doctappoint">
+               <tr ng-repeat="appoint in appoints">
                  <th scope="row">1564646465</th>
-                 <td>{{appoint.user__first_name + " " + appoint.user__last_name}}</td>
+                 <td>{{appoint.Patient__first_name+ " " + appoint.Patient__first_name}}</td>
                  <td>{{appoint.user__age}}</td>
                  <td>{{appoint.user__gender}}</td>
                  <td>{{appoint.appointmentDate}}</td>
