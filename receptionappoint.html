@@ -22,25 +22,22 @@
                <caption>Patient ID :-</caption>
                <thead class="bg-dark table-dark">
                  <tr>
+                   <th scope="col">Index</th>
                    <th scope="col">Patient Id</th>
                    <th scope="col">First Name</th>
-                   <th scope="col">Age</th>
-                   <th scope="col">Gender</th>
                    <th scope="col">Date Assign</th>
                    <th scope="col">Time Assign</th>
                    <th scope="col">Accept/Reject</th>
-                   <th scope="col">Reschedule</th>
                  </tr>
                </thead>
                <tbody>
-                 <tr ng-repeat="(index, appoint) in doctappoint">
-                   <th scope="row">1564646465</th>
-                   <td>{{appoint.user__first_name + " " + appoint.user__last_name}}</td>
-                   <td>{{appoint.user__age}}</td>
-                   <td>{{appoint.user__gender}}</td>
-                   <td>{{appoint.appointmentDate}}</td>
-                   <td>{{appoint.time}}</td>
-                   <td><button type="button" ng-click="accept(appoint,index)" class="btn btn-outline-primary btn-sm">Accept</button>
+                 <tr ng-repeat="(index, appoint) in appoints">
+                   <th scope="row">{{index+1}}</th>
+                   <td>{{appoint.Patient}}</td>
+                   <td>{{appoint.Patient_id__first_name + " " + appoint.Patient_id__last_name}}</td>
+                   <td>{{appoint.Appointment_date}}</td>
+                   <td>{{appoint.Appointment_slot}}</td>
+                   <td><button type="button" ng-click="approved(appoint,index)" class="btn btn-outline-primary btn-sm">Accept</button>
                     <button type="button" ng-click="reject(appoint, index)" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" >Reject</button>
                     <!-- The Modal -->
                   <div ng-app="myApp" ng-controller="ModalController">  
@@ -69,41 +66,7 @@
                   </div>
                   </div>   
                   </td>
-                   <td><button class="btn btn-outline-success" ng-click="edit(appoint)" type="button" data-bs-toggle="modal" data-bs-target="#myModal1">Reschedule</button>
-                    <div ng-app="myApp" ng-controller="Modal2Controller">  
-                      <div class="modal fade" id="myModal1">
-                        <div class="modal-dialog">
-                          <div class="modal-content" >
-                      
-                            <!-- Modal Header -->
-                            <div class="modal-header">
-                              <h4 class="modal-title">Edit Date and Time</h4>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                      
-                            <!-- Modal body -->
-                            <div class="modal-body">
-                              <select class="p-2 form-select " ng-model="time" style="width: 100%; margin-bottom: 10px;" aria-label="Default select example">
-                                <option selected>Choose a time</option>
-                                <option value="9 to 12" >9am to 12 noon</option>
-                                <option value="5 to 8" >5pm to 8 pm</option>
-                              </select> 
-                              <input type="text" class="p-2 form-control" style="margin-bottom: 10px;" ng-model="date">
-                              <input type="text" class="form-control" ng-model="reason" placeholder="Reason">
-    
-                            </div>
-                      
-                             <!-- Modal footer -->
-                            <div class="modal-footer">
-                              <button type="submit" class="btn btn-danger" ng-click="submit(appoint, index)" data-bs-dismiss="modal">Submit</button>
-                            </div>
-                      
-                          </div>
-                        </div>
-                      </div>
-                      </div>   
-                  </td>
-                 </tr>
+                     </tr>
                 
                </tbody>
              </table>

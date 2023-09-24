@@ -70,6 +70,16 @@ span {
     font-size: small;
     font-family: 'Montserrat', sans-serif;
 }
+#txt1 {
+    margin: 10px;
+    padding: 5px;
+    border: none;
+    background-color: rgba(131, 124, 131, 0.3);
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: small;
+    font-family: 'Montserrat', sans-serif;
+}
 
 label {
     font-weight: bold;
@@ -116,21 +126,23 @@ button a {
         </div>
         <div class="content">
             <h1>Login</h1>
+            <form ng-submit="login">
             <div class="form-group">
-                <label for="">Email</label>
+                <label >Email</label>
                 <br>
-                <input type="email" class="form-control" name="" ng-model="email" id="txt" aria-describedby="helpId" placeholder="Email">
-
+                <input type="email" ng-attr-autocomplete="current-email" ng-model="email">
             </div>
             <div class="form-group">
-                <label for="">Password</label>
+                <label >Password</label>
                 <br>
-                <input type="password" class="form-control" ng-model="password" name="" id="txt" placeholder="Password">
+                <input type="password" ng-attr-autocomplete="current-password" ng-model="password">
             </div>
+            </form>
             <a class="fp" ui-sref="Register">Register</a>
             <br>
             <button type="button" class="btn"><a ng-click="login()">Login</a></button>
         </div>
+        
     </div>
 </div>
 

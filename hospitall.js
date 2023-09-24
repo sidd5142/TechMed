@@ -51,6 +51,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			templateUrl: 'doctorinfo.html',
 			controller: 'DoctInformationController'
 		})
+		.state('DoctDashboard.Patients', {
+            url: '/doctpatient',
+			templateUrl: 'doctpatient.html',
+			controller: 'DoctPatientController'
+		})
 		.state('DoctDashboard.Appointment', {
             url: '/doctappointment',
 			templateUrl: 'doctappointment.html',
@@ -76,8 +81,13 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			templateUrl: 'receppatient.html',
 			controller: 'RecepPatientController'
 		})
+		.state('ReceptionDashboard.Register', {
+            url: '/recepdashboard_register',
+			templateUrl: 'recepregistered.html',
+			controller: 'RecepRegisterController'
+		})
 
-		$urlRouterProvider.otherwise('/login');
+		$urlRouterProvider.otherwise('/register');
 }]);
 
 var api = 'https://10.21.85.13:8000/api/'
@@ -136,7 +146,7 @@ app.controller('RegistrationController',function($scope,$http,$window,$state){
 				title: 'Congrats..',
 				text: response.data.message
 			  })
-			$state.go('DoctInformation');
+			$state.go('login');
 		  })
 		  .catch(function(error){
 			// $window.alert(error);
@@ -180,7 +190,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 				title: 'Congrats...',
 				text: 'Successfully signed in'
 			  })
-			$state.go('ReceptionDashboard');
+			$state.go('DoctDashboard');
 		  })
 		  .catch(function(error){
 			// $window.alert(error);
@@ -424,10 +434,6 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		})
 	});
 
-
-	app.controller('DoctDashboardController',function($scope,$http,$window,$state){
-	});
-
 	app.controller('DoctAppointmentController',function($scope,$http,$window,$state){
 		$scope.appoints = [];
 
@@ -470,11 +476,153 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		})
 	});
 
-	app.controller('RecepDoctorController',function($scope,$http,$window,$state){
+	app.controller('RecepRegisterController',function($scope,$http,$window,$state){
+		$scope.registe=[];
+
+		$http.get(api + 'receptionist_registered_users/',{
+			withCredentials:true
+		})
+		.then(function(response){
+			console.log(response)
+			$scope.register = response.data;
+			console.log($scope.register)
+		})
+		.catch(function(error){
+			console.log(error)
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Something went wrong..'
+			  })
+		})
+
+
 	});
 
+
 	app.controller('RecepAppointController',function($scope,$http,$window,$state){
+		$scope.appoints= [];
+
+		$http.get(api + 'receptionist/',{
+			withCredentials:true
+		})
+		.then(function(response){
+			console.log(response)
+			$scope.appoints = response.data;
+			console.log($scope.appoints)
+		})
+		.catch(function(error){
+			console.log(error)
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Something went wrong..'
+			  })
+		})
+
+		$scope.approved = function(appoint){
+			var confirmed = {
+				patient_id : appoint.Patient,
+				rApproval : 1
+			}
+             console.log(confirmed)
+			$http.post(api + 'receptionist/', confirmed, {
+				withCredentials	: true
+			})
+			.then(function(response){
+				console.log(response)
+				Swal.fire({
+					icon: 'success',
+					title: 'Done...',
+					text: 'Appointment Approved'
+				  })
+				  $state.reload('ReceptionDashboard.Appoint')
+			})
+			.catch(function(error){
+				console.log(error)
+				Swal.fire({
+					icon: 'error',
+					title: 'Something Wrong...',
+					text: "Error"
+				  })
+			})
+		}
 	});
+
+
+	app.service('SharedDataService', function () {
+		this.reasonInput = ""; // Initialize the shared variable
+	});
+
+	app.controller('ModalController', function ($scope, $http, $window, $state, SharedDataService) {
+		$scope.reasonInput = ""; 
+		$scope.reasonInput = SharedDataService.reasonInput;
+
+		$scope.submit = function (appoint) {
+		  var data = {
+			appointment_id: dltid,
+			reason: $scope.reasonInput, 
+		  };
+	  console.log(data)
+		  $http.delete(api + 'confirmappointment/', data, {
+			withCredentials : true
+		  })
+			.then(function (response) {
+			  console.log(response);
+			  Swal.fire({
+				icon: 'success',
+				title: 'Deleted...',
+				text: 'Appointment Deleted'
+			  });
+			  $scope.reasonInput = "";
+			})
+			.catch(function (error) {
+			  console.log(error);
+			});
+
+			SharedDataService.reasonInput = "";
+		};
+  });
+
+  app.service('SharedData2Service', function () {
+	this.date = "";
+	this.time = "";
+	this.reason = ""; // Initialize the shared variable
+});
+
+  app.controller('Modal2Controller', function ($scope, $http, $window, $state, SharedData2Service) {
+	$scope.reason = ""; 
+	$scope.reason = SharedData2Service.reason;
+	// $scope.date = SharedData2Service.reason
+	// $scope.time = SharedData2Service.reason
+
+	$scope.submit = function (appoint) {
+	  var data = {
+		appointment_id: edtid,
+		new_appointmentDate: $scope.date, 
+		new_time : $scope.time,
+		reason : $scope.reason
+	  };
+  console.log(data)
+	  $http.put(api + 'confirmappointment/', data, {
+		withCredentials : true
+	  })
+		.then(function (response) {
+		  console.log(response);
+		  Swal.fire({
+			icon: 'success',
+			title: 'Edited...',
+			text: response.data.message
+		  });
+		})
+		.catch(function (error) {
+		  console.log(error);
+		});
+
+		SharedData2Service.time = "";
+		SharedData2Service.date = "";
+	};
+});
 
 	app.controller('RecepDoctorController',function($scope,$http,$window,$state){
 		$scope.doct = [];
@@ -495,6 +643,28 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 				text: 'Something went wrong..'
 			  })
 		})
+
+		$scope.exporttoexcel = function () {
+			const table = document.getElementById('receprecord');
+			const doc = document.createElement('table');
+			doc.innerHTML = table.outerHTML;
+
+			// Convert the HTML document to a blob
+			const blob = new Blob(['\ufeff', doc.outerHTML], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+			// Create a URL for the blob
+			const url = window.URL.createObjectURL(blob);
+
+			// Create a download link and trigger the click event
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = 'Records.xlsx';
+			document.body.appendChild(a);
+			a.click();
+
+			window.URL.revokeObjectURL(url);
+			document.body.removeChild(a);
+		};
 
 	});
    
@@ -519,7 +689,46 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		})
 
 	});
-
-
 	
+	app.controller('DoctDashboardController',function($scope,$http,$window,$state){
+		$scope.dashes = [];
+
+		$http.get(api + 'home_page/',{
+			withCredentials:true
+		})
+		.then(function(response){
+			console.log(response)
+			$scope.dashes = response.data;
+			console.log($scope.dashes)
+		})
+		.catch(function(error){
+			console.log(error)
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Something went wrong..'
+			  })
+		})
+	});
+
+	app.controller('DoctPatientController',function($scope,$http,$window,$state){
+		$scope.patient = [];
+
+		$http.get(api + 'doctor_patients/',{
+			withCredentials: true
+		})
+		.then(function(response){
+			console.log(response)
+			$scope.patient = response.data;
+			console.log($scope.patient)
+		})
+		.catch(function(error){
+			console.log(error)
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Something went wrong..'
+			  })
+		})
+	})
 		  
