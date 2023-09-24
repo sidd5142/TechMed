@@ -28,22 +28,78 @@
                  <th scope="col">Gender</th>
                  <th scope="col">Date Assign</th>
                  <th scope="col">Time Assign</th>
+                 <th scope="col">Medical History</th>
                  <th scope="col">Accept/Reject</th>
                  <th scope="col">Edit</th>
                </tr>
              </thead>
              <tbody>
                <tr ng-repeat="appoint in appoints">
-                 <th scope="row">1564646465</th>
+                <td>{{appoint.Patient_id}}</td>
                  <td>{{appoint.Patient__first_name+ " " + appoint.Patient__first_name}}</td>
-                 <td>{{appoint.user__age}}</td>
-                 <td>{{appoint.user__gender}}</td>
-                 <td>{{appoint.appointmentDate}}</td>
-                 <td>{{appoint.time}}</td>
-                 <td><button type="button" class="btn btn-primary btn-sm">Accept</button>
-                  <button type="button" class="btn btn-secondary btn-sm">Reject</button>
+                 <td>{{appoint.Patient_Age}}</td>
+                 <td>{{appoint.Patient_Gender}}</td>
+                 <td>{{appoint.Appointment_date}}</td>
+                 <td>{{appoint.Appointment_slot}}</td>
+                 <td>{{appoint.Patient_Medical_history}}</td>
+                 <td><button type="button" ng-click="accept(appoint)"  class="btn btn-primary btn-sm">Accept</button>
+                  <button type="button" ng-click="reject(appoint)" class="btn btn-secondary btn-sm">Reject</button>
+
+                  <div ng-app="myApp" ng-controller="ModalController">  
+                    <div class="modal fade" id="myModal">
+                      <div class="modal-dialog">
+                        <div class="modal-content" >
+                    
+                          <div class="modal-header">
+                            <h4 class="modal-title">Reson for Rejecting the Appointment</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                          </div>
+                    
+\                          <div class="modal-body">
+                            <input type="text" class="form-control" ng-model="reasonInput">
+                          </div>
+                    
+                          <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger" ng-click="submit(appoint, index)" data-bs-dismiss="modal">Submit</button>
+                          </div>
+                    
+                        </div>
+                      </div>
+                    </div>
+                    </div> 
                 </td>
-                 <td>  <button class="btn btn-primary" type="button">Edit</button></td>
+
+                 <td><button class="btn btn-primary" type="button" ng-click="edit(appoint)">Edit</button>
+                  <div ng-app="myApp" ng-controller="Modal2Controller">  
+                    <div class="modal fade" id="myModal1">
+                      <div class="modal-dialog">
+                        <div class="modal-content" >
+                    
+                          <div class="modal-header">
+                            <h4 class="modal-title">Edit Date and Time</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                          </div>
+                    
+                          <div class="modal-body">
+                            <select class="p-2 form-select " ng-model="time" style="width: 100%; margin-bottom: 10px;" aria-label="Default select example">
+                              <option selected>Choose a time</option>
+                              <option value="9 to 12" >9am to 12 noon</option>
+                              <option value="5 to 8" >5pm to 8 pm</option>
+                            </select> 
+                            <input type="text" class="p-2 form-control" style="margin-bottom: 10px;" ng-model="date">
+                            <input type="text" class="form-control" ng-model="reason" placeholder="Reason">
+  
+                          </div>
+                    
+                          <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger" ng-click="submit(appoint, index)" data-bs-dismiss="modal">Submit</button>
+                          </div>
+                    
+                        </div>
+                      </div>
+                    </div>
+                    </div>   
+                </td>
                </tr>
                </tbody>
            </table>
