@@ -46,15 +46,35 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			templateUrl: 'doctreg.html',
 			controller: 'DoctRegistrationController'
 		})
-		.state('DoctDashboard.DoctInformation', {
+		.state('DoctDashboard.Information', {
             url: '/doctinformation',
 			templateUrl: 'doctorinfo.html',
 			controller: 'DoctInformationController'
 		})
-		.state('DoctDashboard.DoctAppointment', {
+		.state('DoctDashboard.Appointment', {
             url: '/doctappointment',
 			templateUrl: 'doctappointment.html',
 			controller: 'DoctAppointmentController'
+		})
+		.state('ReceptionDashboard', {
+            url: '/recepdashboard',
+			templateUrl: 'recepdashboard.html',
+			controller: 'RecepDashboardController'
+		})
+		.state('ReceptionDashboard.Doctor', {
+            url: '/recepdashboard_doctor',
+			templateUrl: 'receptiondoctor.html',
+			controller: 'RecepDoctorController'
+		})
+		.state('ReceptionDashboard.Appoint', {
+            url: '/recepdashboard_appoint',
+			templateUrl: 'receptionappoint.html',
+			controller: 'RecepAppointController'
+		})
+		.state('ReceptionDashboard.Patient', {
+            url: '/recepdashboard_patient',
+			templateUrl: 'receppatient.html',
+			controller: 'RecepPatientController'
 		})
 
 		$urlRouterProvider.otherwise('/login');
@@ -150,7 +170,6 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		console.log(regdata);
 			
 			$http.post(api+'login_view/', regdata, {
-			// headers: {'Content-Type': undefined},
 		    withCredentials: true
 		})
           .then(function(response){
@@ -161,7 +180,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 				title: 'Congrats...',
 				text: 'Successfully signed in'
 			  })
-			$state.go('Dashboard');
+			$state.go('ReceptionDashboard');
 		  })
 		  .catch(function(error){
 			// $window.alert(error);
@@ -178,7 +197,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		$scope.patients = [];
 		$scope.panels = [];
 	
-		$http.get(api+'home_page	/', {
+		$http.get(api+'home_page/', {
 			withCredentials: true
 		})
 		.then(function(response){
@@ -353,7 +372,34 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		})
 		.catch(function(error){
 			console.log(error)
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Something went wrong..'
+			  })
 		})
+
+		$scope.export = function () {
+			const table = document.getElementById('recordtable');
+			const doc = document.createElement('table');
+			doc.innerHTML = table.outerHTML;
+
+			// Convert the HTML document to a blob
+			const blob = new Blob(['\ufeff', doc.outerHTML], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+			// Create a URL for the blob
+			const url = window.URL.createObjectURL(blob);
+
+			// Create a download link and trigger the click event
+			const a = document.createElement('a');
+			a.href = url;
+			a.download = 'Records.xlsx';
+			document.body.appendChild(a);
+			a.click();
+
+			window.URL.revokeObjectURL(url);
+			document.body.removeChild(a);
+		};
 	})
 
 
@@ -370,6 +416,11 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		})
 		.catch(function(error){
 			console.log(error)
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Something went wrong..'
+			  })
 		})
 	});
 
@@ -390,7 +441,83 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		})
 		.catch(function(error){
 			console.log(error)
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Something went wrong..'
+			  })
 		})
+	});
+
+	app.controller('RecepDashboardController',function($scope,$http,$window,$state){
+        $scope.panel = [];
+
+		$http.get(api+'home_page/', {
+			withCredentials: true
+		})
+		.then(function(response){
+			console.log(response)
+			$scope.panel = response.data;
+			console.log($scope.panel)
+		})
+		.catch(function(error){
+			console.log(error)
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Something went wrong..'
+			  })
+		})
+	});
+
+	app.controller('RecepDoctorController',function($scope,$http,$window,$state){
+	});
+
+	app.controller('RecepAppointController',function($scope,$http,$window,$state){
+	});
+
+	app.controller('RecepDoctorController',function($scope,$http,$window,$state){
+		$scope.doct = [];
+
+		$http.get(api + 'receptionist_doctors/', {
+			withCredentials: true
+		})
+		.then(function(response){
+			console.log(response)
+			$scope.doct = response.data;
+			console.log($scope.doct)
+		})
+		.catch(function(error){
+			console.log(error)
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Something went wrong..'
+			  })
+		})
+
+	});
+   
+	app.controller('RecepPatientController',function($scope,$http,$window,$state){
+		$scope.pat = [];
+
+		$http.get(api + 'receptionist_patients/', {
+			withCredentials: true
+		})
+		.then(function(response){
+			console.log(response)
+			$scope.pat = response.data;
+			console.log($scope.pat)
+		})
+		.catch(function(error){
+			console.log(error)
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Something went wrong..'
+			  })
+		})
+
 	});
 
 
