@@ -31,40 +31,15 @@
                  </tr>
                </thead>
                <tbody>
-                 <tr ng-repeat="(index, appoint) in appoints">
+                 <tr ng-repeat="appoint in appoints">
                    <th scope="row">{{index+1}}</th>
                    <td>{{appoint.Patient}}</td>
                    <td>{{appoint.Patient_id__first_name + " " + appoint.Patient_id__last_name}}</td>
                    <td>{{appoint.Appointment_date}}</td>
                    <td>{{appoint.Appointment_slot}}</td>
-                   <td><button type="button" ng-click="approved(appoint,index)" class="btn btn-outline-primary btn-sm">Accept</button>
-                    <button type="button" ng-click="reject(appoint, index)" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" >Reject</button>
-                    <!-- The Modal -->
-                  <div ng-app="myApp" ng-controller="ModalController">  
-                  <div class="modal fade" id="myModal">
-                    <div class="modal-dialog">
-                      <div class="modal-content" >
-                  
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                          <h4 class="modal-title">Reson for Rejecting the Appointment</h4>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                  
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                          <input type="text" class="form-control" ng-model="reasonInput">
-                        </div>
-                  
-                         <!-- Modal footer -->
-                        <div class="modal-footer">
-                          <button type="submit" class="btn btn-danger" ng-click="submit(appoint, index)" data-bs-dismiss="modal">Submit</button>
-                        </div>
-                  
-                      </div>
-                    </div>
-                  </div>
-                  </div>   
+                   <td><button type="button" ng-click="approved(appoint)" class="btn btn-outline-primary btn-sm">Accept</button>
+                    <button type="button" ng-click="reject(appoint)" class="btn btn-outline-danger btn-sm" >Reject</button>
+                    
                   </td>
                      </tr>
                 

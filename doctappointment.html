@@ -22,10 +22,10 @@
              <caption>Patient ID :-</caption>
              <thead class="bg-dark table-dark">
                <tr>
-                 <th scope="col">Patient Id</th>
+                 <th scope="col">Index</th>
                  <th scope="col">First Name</th>
                  <th scope="col">Age</th>
-                 <th scope="col">Gender</th>
+                 <th scope="col">Weight</th>
                  <th scope="col">Date Assign</th>
                  <th scope="col">Time Assign</th>
                  <th scope="col">Medical History</th>
@@ -35,13 +35,13 @@
              </thead>
              <tbody>
                <tr ng-repeat="appoint in appoints">
-                <td>{{appoint.Patient_id}}</td>
-                 <td>{{appoint.Patient__first_name+ " " + appoint.Patient__first_name}}</td>
-                 <td>{{appoint.Patient_Age}}</td>
-                 <td>{{appoint.Patient_Gender}}</td>
-                 <td>{{appoint.Appointment_date}}</td>
-                 <td>{{appoint.Appointment_slot}}</td>
-                 <td>{{appoint.Patient_Medical_history}}</td>
+                <td>{{$index+1}}</td>
+                 <td>{{appoint.Patient__first_name+ " " + appoint.Patient__last_name}}</td>
+                 <td>{{appoint.Patient_Details__Patient_Age}}</td>
+                 <td>{{appoint.Patient_Details__Patient_Weight}} kg</td>
+                 <td>{{appoint.Patient_Appointments__Appointment_date}}</td>
+                 <td>{{appoint.Patient_Appointments__Appointment_slot}}</td>
+                 <td>{{appoint.Patient_Appointments__Patient_Medical_history}}</td>
                  <td><button type="button" ng-click="accept(appoint)"  class="btn btn-primary btn-sm">Accept</button>
                   <button type="button" ng-click="reject(appoint)" class="btn btn-secondary btn-sm">Reject</button>
 

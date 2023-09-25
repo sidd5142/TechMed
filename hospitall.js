@@ -87,10 +87,10 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			controller: 'RecepRegisterController'
 		})
 
-		$urlRouterProvider.otherwise('/register');
+		$urlRouterProvider.otherwise('/doctregister');
 }]);
 
-var api = 'https://10.21.85.13:8000/api/'
+var api = 'https://10.21.87.191:8000/api/'
 
 app.controller('HomeController',function($scope,$http,$window,$state){
 
@@ -190,7 +190,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 				title: 'Congrats...',
 				text: 'Successfully signed in'
 			  })
-			$state.go('Dashboard');
+			$state.go('ReceptionDashboard');
 		  })
 		  .catch(function(error){
 			// $window.alert(error);
@@ -318,6 +318,13 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		$scope.depart = [];
 		$scope.departs = [];
 
+		$scope.validatePassword = function(){
+			$scope.passwordMismatch = $scope.password !== $scope.confpass;
+		  }
+
+		  var pass = $scope.password;
+		  var confo = $scope.confpass;
+
 		$http.get(api+'Doctor_Department/', {
 			withCredentials : true
 		})
@@ -326,6 +333,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			$scope.depart = response.data
 			console.log($scope.depart)
 		})
+
 		
 		$scope.doctregister = function(){
 
@@ -334,14 +342,18 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 				first_name : $scope.firstname,
 				last_name : $scope.lastname,
 				email : $scope.email,
+				doctor_fees : $scope.fees,
 				password : $scope.password,
 				phone_no : $scope.contact,
-				department : $scope.department,
+				department_id : $scope.department,
 				qualification : $scope.qualification,
 				morning_time : $scope.morningtime,
 				evening_time : $scope.eveningtime
 			}
 			console.log(doctdata)
+
+			if(pass === confo){
+
 
 		$http.post(api+'DoctorRegistration/' , doctdata, {
 			withCredentials : true
@@ -355,6 +367,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 				title: 'Congrats',
 				text: 'You are Logged in..'
 			  })
+			  $state.go('LogIn')
 		})
 		.catch(function(error){
 			console.log(error)
@@ -363,8 +376,15 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 					title: 'Oops...',
 					text: 'Something went wrong..'
 				  })
-			
 		})
+	    }
+		else {
+			Swal.fire({
+				icon: 'error',
+				title: 'Error...',
+				text: 'Wrong Password..'
+			  })
+		 }
 	 }
 	})
 
@@ -502,7 +522,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		$scope.approved = function(appoint){
 			var confirmed = {
 				patient_id : appoint.Patient,
-				rApproval : 1
+				rApproval : "1"
 			}
              console.log(confirmed)
 			$http.post(api + 'receptionist/', confirmed, {
@@ -741,7 +761,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			var id = {
 
 			}
-			$http.post(api+'doctor/accept/',id, {
+			$http.post(api+'doctor_accept/',id, {
 				withCredentials: true
 			})
 			.then(function(response){
