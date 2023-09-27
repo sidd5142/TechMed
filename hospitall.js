@@ -185,12 +185,26 @@ app.controller('LogInController',function($scope,$http,$window,$state){
           .then(function(response){
             
             console.log(response)
+			console.log(response.data)
+
+		    var msg = response.data.message
+		    console.log(msg)
+		
+		    if(msg === 'Receptionist'){
+		    	$state.go('ReceptionDashboard')
+		    }
+		    else if(msg === 'Doctor') 
+            {
+		        $state.go('DoctDashboard');
+		    }
+		    else {
+		    	$state.go('Dashboard')
+		    }
 			Swal.fire({
 				icon: 'success',
 				title: 'Congrats...',
 				text: 'Successfully signed in'
 			  })
-			$state.go('ReceptionDashboard');
 		  })
 		  .catch(function(error){
 			// $window.alert(error);

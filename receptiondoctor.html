@@ -22,7 +22,7 @@
 
             <div class="col">
                 <form class="d-flex">
-                    <input class="form-control me-2 ml-auto" type="search" style="width: 25%; " placeholder="Search" aria-label="Search">
+                    <input class="form-control me-2 ml-auto" type="search" style="width: 25%; "  ng-model="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                   </form>
             </div>
@@ -46,7 +46,7 @@
                  </tr>
                </thead>
                <tbody>
-                 <tr ng-repeat="record in doct">
+                 <tr ng-repeat="record in doct | filter:search">
                     <th scope="row">{{$index + 1}}</th>
                    <td>{{record.Doctor_id__first_name + " " + record.Doctor_id__last_name}}</td>
                    <!-- <td>{{record.user__age}}</td> -->
