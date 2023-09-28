@@ -1,15 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Home</title>
-  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-  <script src="node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="node_modules/angular/angular.js"></script>
-  <script src="node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>         
-  <script src="hospitall.js"></script>
-</head>
-<body ng-app="myApp" ng-controller="HomeController">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Navbar</a>
@@ -39,12 +27,143 @@
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
           </li>
         </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
       </div>
     </div>
   </nav>
-</body>
-</html>
+
+  <h1 style="text-align: center; font-style: oblique;" >TechMed</h1>
+
+  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="https://www.kailashhealthcare.com/Content/demos/dsliderbg_01.jpg" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="https://www.nationalhospitals.com/Userfiles/Poster/a6afe4f8832d4fb586420fd14b8b5b98.jpg" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="https://www.kailashhealthcare.com/Content/demos/web_banner_1.jpg" class="d-block w-100" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+<br><br>
+
+
+<div class="row row-cols-1 row-cols-md-4 g-2 ml-6 mr-lg-5"  id="choco">
+  <div class="col mr-lg-5 " style="margin-left: 7%;">
+    <div class="card h-100">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRO7KsoOCL6RGPCvcEk-zDRlMRiKxlZoU0Ng&usqp=CAU" style="height: 300px; width: 300px; margin: 8%;" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title justify-content-center" style="text-align: center ;">DOCTOR</h5>
+      </div>
+      <div class="card-footer">
+        <small class="text" style="text-align: center;"><h4><a ui-sref="DoctRegister">LOGIN</a></h4></small>
+      </div>       
+
+    
+      </div>
+    </div>
+      <div class="col mr-lg-5" style="margin-left: 6%;">
+    <div class="card h-100">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzys8Q9ziBAMmdAvBMvYMoOP1UDKuoNoqULg&usqp=CAU" style="height: 300px; width: 300px; margin: 8%;" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title justify-content-center" style="text-align: center ;">RECEPTIONIST</h5>
+      </div>
+      <div class="card-footer">
+        <small class="text " style="text-align: center;"><h4><a ui-sref="LogIn">LOGIN</a></h4></small>                         
+      </div>
+    </div>
+  </div>
+  <div class="col mr-lg-5" style="margin-left: 6%;">
+    <div class="card h-100">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShxzkK-lpbbfF45pHyROYDg0VdbjDkj1QnAA&usqp=CAU" style="height: 300px; width: 300px; margin: 8%;" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title justify-content-center" style="text-align: center ;">PATIENT</h5>
+    </div>
+    <div class="card-footer">
+      <small class="text" style="text-align: center;"><h4><a ui-sref="Register">LOGIN</a></h4></small>
+    </div>
+    </div>
+  </div>
+      </div>
+    </div>
+</div>
+<br> 
+
+  <footer
+          class="text-center text-lg-start text-white"
+          style="background-color: #929fba"
+          >
+    <!-- Grid container -->
+    <div class="container p-4 pb-0">
+      <!-- Section: Links -->
+      <section class="">
+        <!--Grid row-->
+        <div class="row">
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-3 col-xl-3 mx-auto ">
+            <h6 class="text-uppercase mb-4 font-weight-bold">
+              <h2>TechMed Hospitals Pvt. Ltd.</h2>
+            </h6>
+            <p>
+              A hospital is a healthcare institution providing patient treatment with specialized health science and auxiliary healthcare staff and medical equipment.
+            </p>
+          </div>
+          <!-- Grid column -->
+
+          <hr class="w-100 clearfix d-md-none" />
+
+          <hr class="w-100 clearfix d-md-none" />
+
+          <!-- Grid column -->
+          <hr class="w-100 clearfix d-md-none" />
+
+          <!-- Grid column -->
+          <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+            <h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+            <p><i class="fas fa-home mr-3"></i> INDIA, GHZ 10012, UP</p>
+            <p><i class="fas fa-envelope mr-3"></i> siddharthtadav5142@gmail.com</p>
+            <p><i class="fas fa-phone mr-3"></i> srijanomar5840@gmail.com</p>
+            <p><i class="fas fa-print mr-3"></i> +91 9569673877<bh/p>
+          </div>
+          <!-- Grid column -->
+
+          <!-- Grid column -->
+          <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+            <h6 class="text-uppercase mb-4 font-weight-bold">Follow us</h6>
+
+          
+          </div>
+        </div>
+        <!--Grid row-->
+      </section>
+      <!-- Section: Links -->
+    </div>
+    <!-- Grid container -->
+
+    <!-- Copyright -->
+    <div
+         class="text-center p-3"
+         style="background-color: rgba(0, 0, 0, 0.2)"
+         >
+      © 2023 Copyright:
+      <a class="text-white" href="https://techmed.com/"
+         >TechMed.com</a
+        >
+    </div>
+    <!-- Copyright -->
+  </footer> 

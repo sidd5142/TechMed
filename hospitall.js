@@ -56,6 +56,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			templateUrl: 'doctpatient.html',
 			controller: 'DoctPatientController'
 		})
+		.state('DoctDashboard.ApproveAppointment', {
+            url: '/doctapproveappointment',
+			templateUrl: 'doctapproved.html',
+			controller: 'DoctApprovedAppointmentController'
+		})
 		.state('DoctDashboard.Appointment', {
             url: '/doctappointment',
 			templateUrl: 'doctappointment.html',
@@ -87,7 +92,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			controller: 'RecepRegisterController'
 		})
 
-		$urlRouterProvider.otherwise('/doctregister');
+		$urlRouterProvider.otherwise('/home');
 }]);
 
 var api = 'https://10.21.87.191:8000/api/'
@@ -512,7 +517,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 
 	});
 
-
+    var dltid = {};
 	app.controller('RecepAppointController',function($scope,$http,$window,$state){
 		$scope.appoints= [];
 
@@ -559,6 +564,9 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 					text: "Error"
 				  })
 			})
+		}
+		$scope.reject = function(appoint){
+			dltid = appoint.Patient
 		}
 	});
 
@@ -771,11 +779,13 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			  })
 		})
 
-		$scope.accept = function(){
+		$scope.accept = function(appoint){
 			var id = {
-
+               approval_status : "1",
+			   patient_id : appoint.Patient
 			}
-			$http.post(api+'doctor_accept/',id, {
+			console.log(id)
+			$http.post(api+'doctor/',id, {
 				withCredentials: true
 			})
 			.then(function(response){
@@ -803,6 +813,98 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		$scope.edit = function(appoint){
 			editid = appoint.Patient_id
 		}
+	});
+
+	var patid = {};
+
+	app.controller('DoctApprovedAppointmentController', function ($scope, $http, $window, $state, SharedData3Service) {
+		$scope.approved = [];
+
+		$http.get(api + 'approved/', {
+			withCredentials: true
+		})
+		.then(function (response) {
+			console.log(response);
+			$scope.approved = response.data
+			console.log($scope.approved)
+			$scope.prescribed = function(appoint){
+				console.log(appoint.Patient)
+				patid = appoint.Patient
+			}
+		
+	})
+
+
+		.catch(function (error) {
+			console.log(error);
+		  });
+
+
+
+	})
+    var diago = {}
+
+	app.service('SharedData3Service', function () {
+		this.diagnosis = "";
+		// this.diagnosis = SharedDataService.diagnosis;
+		// diago = $scope.diagnosis
+	});
+
+	app.controller('ModalPrescController', function ($scope, $http, $window, $state, SharedData3Service) {
+		
+			$scope.contacts = [];
+			$scope.medicine = "";
+			$scope.dosage = "";
+            $scope.instruction = "";
+
+		  $scope.add = function(){
+			$scope.contacts.push({ 
+				medicine: $scope.medicine,
+				dosage: $scope.dosage,
+				timing: $scope.instruction
+			});
+			$scope.medicine = "";
+			$scope.dosage = "";
+		 };
+
+		$scope.removeContactField = function(index){ 
+			$scope.contacts.splice(index, 1);
+		};
+
+		$scope.diagnosis = ""; 
+		$scope.diagnosis = SharedData3Service.diagnosis;
+
+		$scope.submit = function () {
+			var data = {
+				patient_id : patid,
+				diagnosis: $scope.diagnosis,
+				prescriptions : $scope.contacts
+			}
+		console.log(data)
+		 $http.post(api + 'prescription/', data, {
+			withCredentials: true
+		 })
+		 .then(function(response){
+			console.log(response)
+			$scope.press = response.data
+			console.log($scope.press)
+			Swal.fire({
+				icon: 'success',
+				title: 'Done...',
+				text: console.data.message
+			  })
+		 })
+		 .catch(function(error){
+			console.log(error)
+			Swal.fire({
+				icon: 'error',
+				title: 'cancel...',
+				text: 'Something went wrong'
+			  })
+			})
+		}
+	
+		
 	});
 
 
