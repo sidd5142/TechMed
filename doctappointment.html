@@ -7,7 +7,7 @@
               </div>
               <div class="col">
               <form class="d-flex" style="position: relative; left: 20%;margin-top: 2%;">
-                  <input class="form-control me-2"  type="search" placeholder="Search" aria-label="Search">
+                  <input class="form-control me-2"  type="search" ng-model="search" placeholder="Search" aria-label="Search">
                   <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
               </div>
@@ -34,7 +34,7 @@
                </tr>
              </thead>
              <tbody>
-               <tr ng-repeat="appoint in appoints">
+               <tr ng-repeat="appoint in appoints | filter:search">
                 <td>{{$index+1}}</td>
                  <td>{{appoint.Patient__first_name+ " " + appoint.Patient__last_name}}</td>
                  <td>{{appoint.Patient_Details__Patient_Age}}</td>
@@ -43,7 +43,7 @@
                  <td>{{appoint.Patient_Appointments__Appointment_slot}}</td>
                  <td>{{appoint.Patient_Appointments__Patient_Medical_history}}</td>
                  <td><button type="button" ng-click="accept(appoint)"  class="btn btn-primary btn-sm">Accept</button>
-                  <button type="button" ng-click="reject(appoint)" class="btn btn-secondary btn-sm">Reject</button>
+                  <button type="button" ng-click="reject(appoint)" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">Reject</button>
 
                   <div ng-app="myApp" ng-controller="ModalController">  
                     <div class="modal fade" id="myModal">
@@ -55,9 +55,9 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                           </div>
                     
-\                          <div class="modal-body">
-                            <input type="text" class="form-control" ng-model="reasonInput">
-                          </div>
+                           <div class="modal-body">
+                            <input type="text" class="form-control" ng-model="reason">
+                           </div>
                     
                           <div class="modal-footer">
                             <button type="submit" class="btn btn-danger" ng-click="submit(appoint, index)" data-bs-dismiss="modal">Submit</button>
@@ -69,7 +69,7 @@
                     </div> 
                 </td>
 
-                 <td><button class="btn btn-primary" type="button" ng-click="edit(appoint)">Edit</button>
+                 <td><button class="btn btn-primary" type="button" ng-click="edit(appoint)"  data-bs-toggle="modal" data-bs-target="#myModal1">Edit</button>
                   <div ng-app="myApp" ng-controller="Modal2Controller">  
                     <div class="modal fade" id="myModal1">
                       <div class="modal-dialog">
@@ -86,7 +86,7 @@
                               <option value="9 to 12" >9am to 12 noon</option>
                               <option value="5 to 8" >5pm to 8 pm</option>
                             </select> 
-                            <input type="text" class="p-2 form-control" style="margin-bottom: 10px;" ng-model="date">
+                            <input type="date" class="p-2 form-control" style="margin-bottom: 10px;" ng-model="date">
                             <input type="text" class="form-control" ng-model="reason" placeholder="Reason">
   
                           </div>

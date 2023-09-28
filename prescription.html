@@ -1,22 +1,19 @@
 <div class="container " id="pdf">
     <div style="text-align: center;">
     <img class="img-fluid" src="https://www.healthiply.in/wp-content/uploads/2015/12/TechMed.jpg" alt="" width="150" height="120">
-    
-    <h1 class="text">Prescription</h1>
+    <h1>MedTech Hospitals Pvt. Ltd.</h1>
+    <br>
+    <h3 class="text">Prescription</h3>
     </div>
     <hr>
 
-    <div class="row">
+    <div class="row" ng-repeat="pre in presc"  >
         <div class="col-md-6">
             <h4>Patient Information</h4>
             <form>
                 <div class="form-group">
                     <label for="patientName">Name:</label>
-                    <input type="text" class="form-control" id="patientName" placeholder="Patient's Name">
-                </div>
-                <div class="form-group">
-                    <label for="patientDOB">Date of Birth:</label>
-                    <input type="date" class="form-control" id="patientDOB">
+                    <label  class="form-control" id="patientName">{{pre.Patient__first_name + " " + pre.Patient__last_name}}</label>
                 </div>
             </form>
         </div>
@@ -26,11 +23,11 @@
             <form>
                 <div class="form-group">
                     <label for="doctorName">Doctor's Name:</label>
-                    <input type="text" class="form-control" id="doctorName" placeholder="Doctor's Name">
+                    <label class="form-control" id="doctorName" >{{pre.Doctor__first_name + " " + pre.Doctor__last_name}}</label>
                 </div>
                 <div class="form-group">
                     <label for="prescriptionDate">Prescription Date:</label>
-                    <input type="date" class="form-control" id="prescriptionDate">
+                    <label class="form-control" id="prescriptionDate">{{pre.Date_of_Prescription}}</label>
                 </div>
             </form>
         </div>
@@ -42,14 +39,16 @@
             <tr>
                 <th>Medication Name</th>
                 <th>Dosage</th>
+                <th>Diagnosis</th>
                 <th>Instructions</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td><input type="text" class="form-control" placeholder="Medication Name"></td>
-                <td><input type="text" class="form-control" placeholder="Dosage"></td>
-                <td><input type="text" class="form-control" placeholder="Instructions"></td>
+            <tr ng-repeat="Prescription in presc">
+                <td>{{Prescription.Medications}}</td>
+                <td>{{Prescription.Dosage}}</td>
+                <td>{{Prescription.Dosage}}</td>
+                <td>{{Prescription.Instructions}}</td>
             </tr>
         </tbody>
     </table>

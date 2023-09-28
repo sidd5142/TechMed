@@ -816,14 +816,91 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			})
 		}
 
-		$scope.decline = function(appoint){
-			rejectid = appoint.Patient_id
+		$scope.reject = function(appoint){
+			rejectid = appoint.Patient
 		}
 
 		$scope.edit = function(appoint){
-			editid = appoint.Patient_id
+			editid = appoint.Patient
 		}
 	});
+
+
+	app.service('SharedDataService', function () {
+		this.reason = ""; // Initialize the shared variable
+	});
+
+	app.controller('ModalController', function ($scope, $http, $window, $state, SharedDataService) {
+		$scope.reason= ""; 
+		$scope.reason = SharedDataService.reason;
+
+		$scope.submit = function (appoint) {
+		  var data = {
+			patient_id : rejectid,
+			rejection_reason: $scope.reason, 
+		  };
+	      console.log(data)
+		  $http.post(api + 'doctor/', data, {
+			withCredentials : true
+		  })
+			.then(function (response) {
+			  console.log(response);
+			  Swal.fire({
+				icon: 'success',
+				title: 'Deleted...',
+				text: 'Appointment Deleted'
+			  });
+			  $scope.reason = "";
+			})
+			.catch(function (error) {
+			  console.log(error);
+			});
+
+			SharedDataService.reason = "";
+		};
+  });
+
+
+
+
+  app.service('SharedData2Service', function () {
+	this.date = "";
+	this.time = "";
+	this.reason = ""; // Initialize the shared variable
+});
+
+  app.controller('Modal2Controller', function ($scope, $http, $window, $state, SharedData2Service) {
+	$scope.reason = ""; 
+	$scope.reason = SharedData2Service.reason;
+	
+	$scope.submit = function (appoint) {
+	  var data = {
+		patient_id : editid,
+		updatedDate: $scope.date, 
+		updatedSlot : $scope.time,
+		approval_status : 1,
+		rejection_reason : $scope.reason
+	  };
+  console.log(data)
+	  $http.post(api + 'doctor/', data, {
+		withCredentials : true
+	  })
+		.then(function (response) {
+		  console.log(response);
+		  Swal.fire({
+			icon: 'success',
+			title: 'Edited...',
+			text: response.data.message
+		  });
+		})
+		.catch(function (error) {
+		  console.log(error);
+		});
+
+		SharedData2Service.time = "";
+		SharedData2Service.date = "";
+	};
+});
 
 	var patid = {};
 
@@ -918,81 +995,23 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 	});
 
 
-	app.service('SharedDataService', function () {
-		this.reasonInput = ""; // Initialize the shared variable
-	});
-
-	app.controller('ModalController', function ($scope, $http, $window, $state, SharedDataService) {
-		$scope.reasonInput = ""; 
-		$scope.reasonInput = SharedDataService.reasonInput;
-
-		$scope.submit = function (appoint) {
-		  var data = {
-			appointment_id: dltid,
-			reason: $scope.reasonInput, 
-		  };
-	  console.log(data)
-		  $http.delete(api + 'confirmappointment/', data, {
-			withCredentials : true
-		  })
-			.then(function (response) {
-			  console.log(response);
-			  Swal.fire({
-				icon: 'success',
-				title: 'Deleted...',
-				text: 'Appointment Deleted'
-			  });
-			  $scope.reasonInput = "";
-			})
-			.catch(function (error) {
-			  console.log(error);
-			});
-
-			SharedDataService.reasonInput = "";
-		};
-  });
-
-  app.service('SharedData2Service', function () {
-	this.date = "";
-	this.time = "";
-	this.reason = ""; // Initialize the shared variable
-});
-
-  app.controller('Modal2Controller', function ($scope, $http, $window, $state, SharedData2Service) {
-	$scope.reason = ""; 
-	$scope.reason = SharedData2Service.reason;
-	// $scope.date = SharedData2Service.reason
-	// $scope.time = SharedData2Service.reason
-
-	$scope.submit = function (appoint) {
-	  var data = {
-		appointment_id: edtid,
-		new_appointmentDate: $scope.date, 
-		new_time : $scope.time,
-		reason : $scope.reason
-	  };
-  console.log(data)
-	  $http.put(api + 'confirmappointment/', data, {
-		withCredentials : true
-	  })
-		.then(function (response) {
-		  console.log(response);
-		  Swal.fire({
-			icon: 'success',
-			title: 'Edited...',
-			text: response.data.message
-		  });
-		})
-		.catch(function (error) {
-		  console.log(error);
-		});
-
-		SharedData2Service.time = "";
-		SharedData2Service.date = "";
-	};
-});
 
 app.controller('PrescriptionController', function ($scope, $http, $window, $state) {
+    $scope.presc = [];
+
+	$http.get(api + 'all_prescriptions/', {
+		withCredentials : true
+	})
+	.then(function (response) {
+		console.log(response.data)
+		$scope.presc = response.data
+	})
+	.catch(function(error){
+		console.log(error)
+	})
+
+
+
 	$scope.download = function() {
 		const printContent = document.getElementById("pdf");
             const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
