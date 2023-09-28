@@ -1,0 +1,27 @@
+
+<button class="btn btn-outline-danger" ng-click="view()" data-bs-toggle="modal" data-bs-target="#myModal">View</button>
+
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+  
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div> 
+  
+        <div class="modal-body">
+            <div id="paymentrecord">
+                <div ng-bind-html="paymentpage"></div>
+            </div>
+            <button class="btn btn-outline-success" ng-click="downloadpdf()">Download</button>
+
+        </div>
+  
+        <!-- Modal footer -->
+        
+  
+      </div>
+    </div>
+  </div>

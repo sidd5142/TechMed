@@ -36,6 +36,16 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 			templateUrl: 'patientrecord.html',
 			controller: 'PatientRecoController'
 		})
+		.state('Dashboard.Prescriptions', {
+            url: '/prescription',
+			templateUrl: 'prescription.html',
+			controller: 'PrescriptionController'
+		})
+		.state('Dashboard.Payement', {
+            url: '/payment',
+			templateUrl: 'payment.html',
+			controller: 'PaymentController'
+		})
 		.state('DoctDashboard', {
             url: '/doctdashboard',
 			templateUrl: 'doctdashboard.html',
@@ -982,4 +992,42 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 	};
 });
 
+app.controller('PrescriptionController', function ($scope, $http, $window, $state) {
+	$scope.download = function() {
+		const printContent = document.getElementById("pdf");
+            const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+            WindowPrt.document.write(printContent.innerHTML);
+            WindowPrt.document.close();
+            WindowPrt.focus();
+            WindowPrt.print();
+            WindowPrt.close();
+	}
+})
+
+app.controller('PaymentController', function ($scope, $http, $sce, $window, $state) {
+	$http.post(api + 'payment_history/', {payement_id : 12},{
+		headers: {'Content-Type': undefined},
+		withCredentials : true
+	})
+	.then(function (response) {
+		console.log(response.data);
+
+		$scope.view = function(){
+				$scope.paymentpage = $sce.trustAsHtml(response.data);
+		}
+	})
+	.catch(function (error) {
+		console.log(error)
+	})
+
+	$scope.downloadpdf = function() {
+		const printContent = document.getElementById("paymentrecord");
+            const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+            WindowPrt.document.write(printContent.innerHTML);
+            WindowPrt.document.close();
+            WindowPrt.focus();
+            WindowPrt.print();
+            WindowPrt.close();
+	}
+})
 		  
