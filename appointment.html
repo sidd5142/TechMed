@@ -11,7 +11,7 @@
     <h5>Department :-</h5>
     <div class="input-group flex-nowrap">
       <select class="p-3 form-select " ng-model="selectdepartment" style="width: 100%;" aria-label="Default select example">
-        <option selected>Select Department</option>
+        <option value="" selected disabled hidden>Select Department</option>                               
         <option value="{{departs.id}}" ng-repeat="departs in depart" ng-click="selectdepart(departs)">{{departs.Department}}</option>
           </select>                
      </div>
@@ -20,8 +20,8 @@
   <div style="margin-left: 5%; margin-top: 3%;">
     <h5>Doctor :-</h5>
     <div class="input-group flex-nowrap">
-      <select class="p-3 form-select " ng-model="selectcat" style="width: 100%;" aria-label="Default select example">
-        <option selected>Select Department</option>
+      <select class="p-3 form-select " ng-model="selectcategory" style="width: 100%;" aria-label="Default select example">
+        <option value="" selected disabled hidden>Select Doctor</option>                               
         <option value="{{category.Doctor}}" ng-repeat="category in categories" ng-click="selectcat(category)">Dr. {{category.Doctor__first_name + " " + category.Doctor__last_name}}</option>
           </select>                
      </div>
@@ -30,21 +30,21 @@
       <h5>Payment Status :-</h5>
       <div class="input-group flex-nowrap">
         <select class="p-3 form-select " ng-model="paystatus" style="width: 100%;" aria-label="Default select example">
-          <option selected>Select status</option>
+          <option value="" selected disabled hidden>Payment Status</option>                               
           <option value="1">Confirmed</option>
           <option value="0">Not Confirmed</option>          
         </select>                
        </div>
   </div>
 
-  <div style="margin-left: 8%; margin-top: 3%;">
+  <!-- <div style="margin-left: 8%; margin-top: 3%;">
       <h5>Amount :-</h5>
-      <div class="input-group flex-nowrap">
-        <input type="number" class="p-3 form-control border" ng-model="amount" placeholder="Amount" aria-label="report" aria-describedby="addon-wrapping">
+      <div class="input-group flex-nowrap" ng-repeat="money in slot">
+        <label  class="p-3 form-control border"  ng-model="amount" placeholder="Amount" aria-label="report" aria-describedby="addon-wrapping">{{money.fees}}</label>
       </div>
-  </div>
+  </div> -->
 
-  <div style=" margin-top: 3%; margin-left: 5%;">
+  <div style=" margin-top: 3%; margin-left: 8%;">
     <h5> Medical History :-</h5>
 <div class="col">
 <div class="input-group flex-nowrap">
@@ -53,7 +53,7 @@
 </div>
 </div>
 
-  <div style=" margin-top: 3%; margin-left: 8%;">
+  <div style=" margin-top: 3%; margin-left: 5%;">
     <h5>Appointment Date :-</h5>
 <div class="col">
 <div class="input-group flex-nowrap">
@@ -65,10 +65,11 @@
 <div style="margin-left: 8%; margin-top: 3%;">
   <h5>Appointment Slot :-</h5>
   <div class="input-group flex-nowrap">
-    <select class="p-3 form-select " ng-model="slot" style="width: 100%;" aria-label="Default select example">
-      <option selected>Select slot</option>
-      <option value="10-12">10 am - 12 noon</option>
-      <option value="4-8">4 pm - 8 pm</option>          
+    <select class="p-3 form-select " ng-model="sloted" style="width: 100%;" aria-label="Default select example">
+      <option value="" selected disabled hidden>Slot</option>                               
+      <!-- <option value="{{slots.slot1}}" ng-repeat="slots in slot">{{slots.slot1.Morning_Time}}</option> -->
+      <option value="8-12">morning 9-12</option>          
+      <option value="4-8">evening 5-8</option>          
     </select>                
    </div>
 </div>

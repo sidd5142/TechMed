@@ -60,6 +60,10 @@
     </button>
   </div>
 
+  <h2>Graph</h2>
+
+  <div google-chart chart="chartObject" style="height: 400px;"></div>
+
 <br><br>
 
 
@@ -167,3 +171,33 @@
     </div>
     <!-- Copyright -->
   </footer> 
+
+
+  <!--  $http.get('/your-server-endpoint-url').then(function (response) {
+                var data = response.data;
+                // Extract data from the response
+                var totalDoctor = data.total_doctor;
+                var totalPatient = data.total_patient;
+                var totalDepartments = data.total_departments;
+                var totalAppointments = data.total_appointments;
+
+                // Create a chart data array
+                $scope.chartObject = {};
+                $scope.chartObject.type = 'BarChart'; // You can change the chart type
+                $scope.chartObject.data = {
+                    cols: [
+                        { id: 'category', label: 'Category', type: 'string' },
+                        { id: 'value', label: 'Value', type: 'number' },
+                    ],
+                    rows: [
+                        { c: [{ v: 'Doctors' }, { v: totalDoctor }] },
+                        { c: [{ v: 'Patients' }, { v: totalPatient }] },
+                        { c: [{ v: 'Departments' }, { v: totalDepartments }] },
+                        { c: [{ v: 'Appointments' }, { v: totalAppointments }] },
+                    ],
+                };
+                $scope.chartObject.options = {
+                    title: 'Chart Title',
+                };
+            });
+        }); -->

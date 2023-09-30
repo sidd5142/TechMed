@@ -258,6 +258,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 	 app.controller('AppointmentController',function($scope,$http,$window,$state){
 		$scope.patient = [];
 		$scope.depart = [];
+		$scope.slot = [];
 
 		$http.get(api+'Doctor_Department/',{
 			withCredentials: true
@@ -272,13 +273,29 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 				var Data = {department : departs.id};
 				console.log(departs.id)
                 console.log(Data)
+
 				$http.get(api + 'Doctor_details/', {params : Data},{
 					withCredentials:true
 				})
 				.then(function(response){
 					console.log(response)
 					$scope.categories=response.data
-					console.log($scope.categories)	
+					console.log($scope.categories)
+					
+					$scope.selectcat = function(category) {
+                    var id = {doctor_id : category.Doctor}
+					$http.get(api + 'doctor_slot/',{params : id,
+						withCredentials:true
+					})
+					.then(function(response){
+						console.log(response)
+						$scope.slot = response.data;
+						console.log($scope.slot)
+					})
+					.catch(function(error){
+						console.log(error)
+					})
+					}
 				})
 				.catch(function(error	){
 					console.log(error)
@@ -292,12 +309,12 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		
 		$scope.appoint = function(){
 			var apdata = {
-				amount : $scope.amount,
-				doctor_id : $scope.selectcat,
+				// amount : $scope.amount,
+				doctor_id : $scope.selectcategory,
 				paymentStatus : $scope.paystatus,
 				medical_history : $scope.history,
 				appointment_date : $scope.appointment,
-				appointment_slot : $scope.slot
+				appointment_slot : $scope.sloted
 			 }
 			 console.log(apdata)
 			$http.post(api + 'patient/' , apdata, {
@@ -585,17 +602,18 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		this.reasonInput = ""; // Initialize the shared variable
 	});
 
-	app.controller('ModalController', function ($scope, $http, $window, $state, SharedDataService) {
+	app.controller('ModalAppointController', function ($scope, $http, $window, $state, SharedDataService) {
 		$scope.reasonInput = ""; 
 		$scope.reasonInput = SharedDataService.reasonInput;
 
-		$scope.submit = function (appoint) {
+		$scope.submit = function(appoint) {
 		  var data = {
-			appointment_id: dltid,
+			patient_id: dltid,
 			reason: $scope.reasonInput, 
+			rApproval:"0"
 		  };
 	  console.log(data)
-		  $http.delete(api + 'confirmappointment/', data, {
+		  $http.post(api + 'receptionist/', data, {
 			withCredentials : true
 		  })
 			.then(function (response) {
@@ -837,7 +855,8 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		$scope.submit = function (appoint) {
 		  var data = {
 			patient_id : rejectid,
-			rejection_reason: $scope.reason, 
+			rejection_reason: $scope.reason,
+			approval_status : 0 
 		  };
 	      console.log(data)
 		  $http.post(api + 'doctor/', data, {
@@ -847,8 +866,8 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			  console.log(response);
 			  Swal.fire({
 				icon: 'success',
-				title: 'Deleted...',
-				text: 'Appointment Deleted'
+				title: response.statusText,
+				text: response.data.message
 			  });
 			  $scope.reason = "";
 			})
@@ -878,7 +897,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		patient_id : editid,
 		updatedDate: $scope.date, 
 		updatedSlot : $scope.time,
-		approval_status : 1,
+		approval_status : '1',
 		rejection_reason : $scope.reason
 	  };
   console.log(data)
@@ -889,7 +908,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		  console.log(response);
 		  Swal.fire({
 			icon: 'success',
-			title: 'Edited...',
+			title: response.statusText,
 			text: response.data.message
 		  });
 		})
@@ -978,7 +997,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			Swal.fire({
 				icon: 'success',
 				title: 'Done...',
-				text: console.data.message
+				text: response.data.message
 			  })
 		 })
 		 .catch(function(error){

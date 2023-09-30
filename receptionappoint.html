@@ -39,7 +39,7 @@
                    <td>{{appoint.Appointment_slot}}</td>
                    <td><button type="button" ng-click="approved(appoint)" class="btn btn-outline-primary btn-sm">Accept</button>
                     <button type="button" ng-click="reject(appoint)" class="btn btn-outline-danger btn-sm"  data-bs-toggle="modal" data-bs-target="#myModal" >Reject</button>
-                    <div ng-app="myApp" ng-controller="ModalController">  
+                    <div ng-app="myApp" ng-controller="ModalAppointController">  
                       <div class="modal fade" id="myModal">
                         <div class="modal-dialog">
                           <div class="modal-content" >

@@ -45,13 +45,13 @@ top: 13px;
                       <div class="row">
                         <div class="col-md-6 mb-4">
                           <div class="form-outline">
-                            <input type="text" id="form3Example1m" ng-model="firstname" class="form-control form-control-lg" />
+                            <input type="text" id="form3Example1m" ng-model="firstname" class="form-control form-control-lg" required />
                             <label class="form-label" for="form3Example1m">First name</label>
                           </div>
                         </div>
                         <div class="col-md-6 mb-4">
                           <div class="form-outline">
-                            <input type="text" id="form3Example1n" ng-model="lastname" class="form-control form-control-lg" />
+                            <input type="text" id="form3Example1n" ng-model="lastname" class="form-control form-control-lg" required />
                             <label class="form-label" for="form3Example1n">Last name</label>
                           </div>
                         </div>
@@ -60,14 +60,14 @@ top: 13px;
                       <div class="row">
                         <div class="col-md-6 mb-4">
                           <div class="form-outline">
-                            <input type="number" id="form3Example1m1" ng-model="contact" class="form-control form-control-lg" />
+                            <input type="number" id="form3Example1m1" ng-model="contact" class="form-control form-control-lg" required/>
                             <label class="form-label" for="form3Example1m1">Phone Number</label>
                           </div>
                         </div>
                        
                         <div class="col-md-6 mb-4">
                           <div class="form-outline">
-                            <input type="text" id="form3Example1m1" ng-model="username" class="form-control form-control-lg" />
+                            <input type="text" id="form3Example1m1" ng-model="username" class="form-control form-control-lg" required/>
                             <label class="form-label" for="form3Example1m1">Username</label>
                           </div>
                         </div> 
@@ -76,14 +76,14 @@ top: 13px;
                       <div class="row">
                         <div class="col-md-6 mb-4">
                           <div class="form-outline">
-                            <input type="text" id="form3Example1m1" ng-model="morningtime" class="form-control form-control-lg" />
+                            <input type="text" id="form3Example1m1" ng-model="morningtime" class="form-control form-control-lg" required/>
                             <label class="form-label" for="form3Example1m1">Morning time</label>
                           </div>
                         </div>
                        
                         <div class="col-md-6 mb-4">
                           <div class="form-outline">
-                            <input type="text" id="form3Example1m1" ng-model="eveningtime" class="form-control form-control-lg" />
+                            <input type="text" id="form3Example1m1" ng-model="eveningtime" class="form-control form-control-lg" required/>
                             <label class="form-label" for="form3Example1m1">Evening time</label>
                           </div>
                         </div>
@@ -93,7 +93,7 @@ top: 13px;
                       <div class="row">
                         <div class="col-md-6 mb-4">
                           <div class="form-outline">
-                            <input type="number" id="form3Example1m1" ng-model="fees" class="form-control form-control-lg" />
+                            <input type="number" id="form3Example1m1" ng-model="fees" class="form-control form-control-lg" required/>
                             <label class="form-label" for="form3Example1m1">Fees</label>
                           </div>
                         </div>
@@ -105,7 +105,7 @@ top: 13px;
                       
 
                       <div class="form-outline mb-4">
-                      <select class="form-control form-control-lg" ng-model="department"  style="width: 100%;" aria-label="Default select example">
+                      <select class="form-control form-control-lg" ng-model="department"  style="width: 100%;" aria-label="Default select example" required>
                         <option value="{{departs.id}}" ng-repeat="departs in depart">{{departs.Department}}</option>
                       </select>
                     <label class="form-label" for="form3Example8">Department</label>
@@ -128,12 +128,12 @@ top: 13px;
     
       
                       <div class="form-outline mb-4">
-                        <input type="text" id="form3Example97" ng-model="email" class="form-control form-control-lg" />
+                        <input type="text" id="form3Example97" ng-model="email" class="form-control form-control-lg" required/>
                         <label class="form-label" for="form3Example97">Email ID</label>
                       </div>
 
                       <div class="form-outline mb-4">
-                        <input type="text" id="form3Example97" ng-model="qualification" class="form-control form-control-lg" />
+                        <input type="text" id="form3Example97" ng-model="qualification" class="form-control form-control-lg" required/>
                         <label class="form-label" for="form3Example97">Qualification</label>
                       </div>
       

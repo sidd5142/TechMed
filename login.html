@@ -1,66 +1,37 @@
-<style>
-    .divider:after,
-.divider:before {
-content: "";
-flex: 1;
-height: 1px;
-background: #eee;
-}
-.h-custom {
-height: calc(100% - 73px);
-}
-@media (max-width: 450px) {
-.h-custom {
-height: 100%;
-}
-}
-</style>
-</head>
-<body>
-<section class="vh-100">
-    <div class="container-fluid h-custom">
-        <div class="text-center">
-            <h1 class="" style="font-size: 38px; margin-top: 5%;"><u>SIGN IN</u></h1>
-          </div>
-      <div class="row d-flex justify-content-center align-items-center h-100">
-      
-        <div class="col-md-9 col-lg-6 col-xl-5">
-          <img src="https://img.freepik.com/free-vector/people-walking-sitting-hospital-building-city-clinic-glass-exterior-flat-vector-illustration-medical-help-emergency-architecture-healthcare-concept_74855-10130.jpg" class="img-fluid"
-            alt="Sample image">
-        </div>
 
-        <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-          <form>
-           
-            <h4 class="text-lg-center" style="margin-bottom: 4%;"><u>Welcome !!</h4>
-           
-  
-            <!-- Email input -->
-            <div class="form-outline mb-4"> 
-              <input type="email" id="form3Example3" class="form-control form-control-lg"
-                placeholder="Enter a email address" ng-model="email" />
-              <label class="form-label" for="form3Example3">Email address</label>
-            </div>
-  
-            <!-- Password input -->
-            <div class="form-outline mb-3">
-              <input type="password" id="form3Example4" ng-model="password" class="form-control form-control-lg"
-                placeholder="Enter password" />
-              <label class="form-label" for="form3Example4">Password</label>
-            </div>
-  
-            <div class="d-flex justify-content-between align-items-center">                 
-            </div>
-  
-            <div class="text-center text-lg-start mt-4 pt-2">
-              <button type="button" class="btn btn-primary btn-lg "
-                style="padding-left: 2.5rem; padding-right: 2.5rem; margin-left: 40%;" ng-click="login()">Login</button>
-              <h4 class="small fw-bold mt-2 pt-1 mb-0 text-xl-center" style="font-size: 15px;">Don't have an account? <a ui-sref="Register"
-                  class="link-danger">Register</a></h4>
-            </div>
-  
-          </form>
-        </div>
-      </div>
+    <div style="text-align: center; margin-top: 5%;">
+    <h1>TechMed</h1>
+    <br>
+    <h2>Welcome !!</h2>
     </div>
-  </section>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-4" >
+                <div class="card" style="height: 400px;">
+                    <img src="https://img.freepik.com/free-vector/people-walking-sitting-hospital-building-city-clinic-glass-exterior-flat-vector-illustration-medical-help-emergency-architecture-healthcare-concept_74855-10130.jpg?q=10&h=200" alt="Hospital Logo" height="290" width="290" class="card-img" style="margin-top: 8%;">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body" style="height: 400px";>
+                        <h4 class="card-title text-center">Hospital Login</h4><br><br>
+                        <form>
+                            <div class="form-group">
+                                <label for="username">Email:</label>
+                                <input type="email" class="form-control" ng-model="email" placeholder="Enter Email" required>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label for="password">Password:</label>
+                                <input type="password" class="form-control" ng-model="password" placeholder="Enter password">
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-primary" ng-click="login()">Login</button>
+                            <br><br>
+                            <p>Don't have an account? <a ui-sref="Register">Register</a></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
