@@ -898,7 +898,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		updatedDate: $scope.date, 
 		updatedSlot : $scope.time,
 		approval_status : '1',
-		rejection_reason : $scope.reason
+		// rejection_reason : $scope.reason
 	  };
   console.log(data)
 	  $http.post(api + 'doctor/', data, {
