@@ -1,6 +1,6 @@
-<div class="container " id="pdf">
+<div class="container " id="pdf" ng-show="false">
     <div style="text-align: center;">
-    <img class="img-fluid" src="https://www.healthiply.in/wp-content/uploads/2015/12/TechMed.jpg" alt="" width="150" height="120">
+    <img class="img-fluid" src="https://outsourcetopk.com/public/assets/images/portfolio/logo/Hospital-1.jpg" alt="" width="150" height="120">
     <h1>MedTech Hospitals Pvt. Ltd.</h1>
     <br>
     <h3 class="text">Prescription</h3>
@@ -53,6 +53,45 @@
         </tbody>
     </table>
 </div>
- <div class="text-center mt-4">
+ <!-- <div class="text-center mt-4">
     <button class="btn btn-primary" ng-click="download()">Print Prescription</button>
-</div>
+</div> -->
+
+
+<div class="col mt-lg-3">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h3 style="font-size: 40px;">Prescription Records</h3>
+            </div>
+           
+        </div>
+  
+        <hr>
+  
+        <table class="table caption-top" id="recordtable">
+           <thead class="bg-dark table-dark">
+             <tr>
+               <th scope="col">Index</th>
+               <th scope="col">Consulted With</th>
+               <th scope="col">Diagnosis</th>
+               <th scope="col">Consult Date</th>
+               <th scope="col">Prescription</th>
+              
+             </tr>
+           </thead>
+           <tbody>
+             <tr ng-repeat="patient in presc">
+               <th scope="row">{{$index + 1}}</th>
+               <td>Dr. {{patient.Doctor__first_name + " " + patient.Doctor__last_name}}</td>
+               <td>{{patient.Diagnosis}}</td>
+               <td>{{patient.Date_of_Prescription}}</td>
+                <td><button class="btn btn-outline-success" ng-click="download()">Download</button></td>
+             </tr>
+             
+           </tbody>
+         </table>
+  
+    </div>
+  </div>
+          

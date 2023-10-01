@@ -1,4 +1,14 @@
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+<style>
+  #graph {
+    display: flex;
+    flex-direction: row;
+    margin-top: 5%;
+    margin-bottom: 3%;
+  }
+</style>
+
+ <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Navbar</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,9 +70,14 @@
     </button>
   </div>
 
-  <h2>Graph</h2>
 
-  <ng-google-charts data="chartOptions"></ng-google-charts>
+  <div id="graph" >
+    <canvas id="myChart" style="width:100%;max-width:600px; margin-left: 8%;"></canvas>
+
+    <canvas id="myChart1" style="width:100%;max-width:600px;"></canvas>
+  </div>
+
+  <!-- <ng-google-charts data="chartOptions"></ng-google-charts> -->
 <br><br>
 
 

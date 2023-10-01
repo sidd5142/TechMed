@@ -4,10 +4,7 @@
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="node_modules/sweetalert2/dist/sweetalert2.min.css">
 <script src="node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
-<!-- <script src="node_modules/jquery/dist/jquery.slim.min.js"></script> -->
-<!-- <script src="node_modules/popper.js/dist/umd/popper.min.js"></script> -->
 <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <!-- <script src="node_modules/jquery/dist/jquery.min.js"></script> -->
   <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="node_modules/angular/angular.js"></script>
   <script src="node_modules/@uirouter/angularjs/release/angular-ui-router.js"></script>
@@ -108,19 +105,29 @@ top: 13px;
       
                      
                           <div class="form-outline mb-4">   
-                        <input type="text" id="form3Example8" ng-model="password" class="form-control form-control-lg" />
+                        <input type="password" id="form3Example8" ng-model="password" class="form-control form-control-lg" />
                         <label class="form-label" for="form3Example8">Password</label>
                       </div>
       
                       <div class="form-outline mb-4">
-                        <input type="text" id="form3Example90" ng-model="confpass" class="form-control form-control-lg" />
+                        <input type="password" id="form3Example90" ng-model="confpass" ng-change="validatePassword()" class="form-control form-control-lg" />
+                        <div class="text-danger" ng-show="myForm.confpassword.$dirty && myForm.confpassword.$error.required">Confirm Password is Required</div> 
+                        <div class="text-danger" ng-show="passwordMismatch">
+                          Password do not match.
+                        </div>
                         <label class="form-label" for="form3Example90">Confirm Password</label>
                       </div>
     
       
                       <div class="form-outline mb-4">
-                        <input type="text" id="form3Example97" ng-model="email" class="form-control form-control-lg" />
+                        <input type="text" id="form3Example97" ng-model="email" ng-change="validateEmail()"  class="form-control form-control-lg" />
                         <label class="form-label" for="form3Example97">Email ID</label>
+                        <div ng-show="email !== '' && !emailIsValid">
+                          <p style="color: red;">Invalid email format</p>
+                      </div>
+                      <div ng-show="emailIsValid">
+                          <p style="color: green;">Valid email format</p>
+                      </div>
                       </div>
 
                       <div class="form-outline mb-4">

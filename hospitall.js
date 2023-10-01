@@ -109,6 +109,72 @@ var api = 'https://10.21.87.191:8000/api/'
 
 app.controller('HomeController',function($scope,$http,$window,$state){
 
+	$http.get(api + 'graph/', {
+		withCredentials: true
+	})
+	.then(function(response){
+		console.log(response.data)
+		var data = response.data
+		var doctors = data.doctors;
+		var patient = data.patients;
+		var appointment = data.appointments;
+		var department = data.departments	
+
+		const xValues = ["Doctors", "Patient", "Appointment", "Department"];
+      const yValues = [doctors, patient, appointment, department];
+	  var barColors1 = ["red", "green","blue","orange","brown"];
+      const barColors = [
+        "#b91d47",
+        "#00aba9",
+        "#2b5797",
+        "#e8c3b9",
+      ];
+
+      new Chart("myChart", {
+        type: "doughnut",
+        data: {
+          labels: xValues,
+          datasets: [{
+            backgroundColor: barColors,
+            data: yValues
+          }]
+        },
+        options: {
+          title: {
+            display: true,
+            text: "TechMed Hospitals Graph"
+          }
+        }
+      });
+
+	//   BAR GRAPH  //
+
+	new Chart("myChart1", {
+		type: "horizontalBar",
+		data: {
+		labels: xValues,
+		datasets: [{
+		  backgroundColor: barColors,
+		  data: yValues
+		}]
+	  },
+		options: {
+		  legend: {display: false},
+		  title: {
+			display: true,
+			text: "TechMed Hospitals Analysis Graph"
+		  },
+		  scales: {
+			xAxes: [{ticks: {min: 10, max:60}}]
+		  }
+		}
+	  });
+
+  	})
+	.catch(function(error){
+		console.log(error)
+	})
+
 });
 
 app.controller('RegistrationController',function($scope,$http,$window,$state){
@@ -126,12 +192,22 @@ app.controller('RegistrationController',function($scope,$http,$window,$state){
 	}
 
 	$scope.validatePassword = function(){
-		$scope.passwordMismatch = $scope.password !== $scope.confpassword;
+		$scope.passwordMismatch = $scope.password !== $scope.confpass;
 	  }
+
+	$scope.validateEmail = function () {
+		var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+		if (emailPattern.test($scope.email)) {
+			$scope.emailIsValid = true;
+		} else {
+			$scope.emailIsValid = false;
+		}
+	};
 
 	 $scope.register = function(){
 		var pass = $scope.password;
-		var confpass = $scope.confpassword;
+		var confpass = $scope.confpass;
 
 		var regdata = {
             first_name: $scope.firstname,
@@ -147,7 +223,7 @@ app.controller('RegistrationController',function($scope,$http,$window,$state){
 		};
 		console.log(regdata);
 
-		// if(pass == confpass){
+		if(pass == confpass){
 			
 			$http.post(api+'PatientRegisteration/', regdata, {
 			headers: {'Content-Type': undefined},
@@ -161,10 +237,9 @@ app.controller('RegistrationController',function($scope,$http,$window,$state){
 				title: 'Congrats..',
 				text: response.data.message
 			  })
-			$state.go('login');
+			$state.go('LogIn');
 		  })
 		  .catch(function(error){
-			// $window.alert(error);
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
@@ -172,19 +247,107 @@ app.controller('RegistrationController',function($scope,$http,$window,$state){
 			  })
 		  })
 		}
-		// else{
-		// 	// $window.alert('Incorrect Password');
-		// 	Swal.fire({
-		// 		icon: 'error',
-		// 		title: 'Oops...',
-		// 		text: 'Incorrect Password '
-		// 	  })
-		// }
-
-	 
+	
+	else{
+		Swal.fire({
+			icon: 'error',
+			title: 'Oops...',
+			text: 'Incorrect password'
+		  })
+	}
+  }
+		
 });
 
+app.controller('DoctRegistrationController',function($scope,$http,$window,$state){
+	$scope.depart = [];
+	$scope.departs = [];
+
+	$scope.validatePassword = function(){
+		$scope.passwordMismatch = $scope.password !== $scope.confpass;
+	  }
+
+	  var pass = $scope.password;
+	  var confo = $scope.confpass;
+
+	$http.get(api+'Doctor_Department/', {
+		withCredentials : true
+	})
+	.then(function(response){
+		console.log(response);
+		$scope.depart = response.data
+		console.log($scope.depart)
+	})
+
+	
+	$scope.doctregister = function(){
+
+		var doctdata = {
+			username : $scope.username,
+			first_name : $scope.firstname,
+			last_name : $scope.lastname,
+			email : $scope.email,
+			doctor_fees : $scope.fees,
+			password : $scope.password,
+			phone_no : $scope.contact,
+			department_id : $scope.department,
+			qualification : $scope.qualification,
+			morning_time : $scope.morningtime,
+			evening_time : $scope.eveningtime
+		}
+		console.log(doctdata)
+
+		if(pass === confo){
+
+
+	$http.post(api+'DoctorRegistration/' , doctdata, {
+		withCredentials : true
+	})
+	.then(function(response){
+		console.log(response);
+		$scope.departs = response.data;
+		console.log($scope.departs);
+		Swal.fire({
+			icon: 'success',
+			title: 'Congrats',
+			text: 'You are Logged in..'
+		  })
+		  $state.go('LogIn')
+	})
+	.catch(function(error){
+		console.log(error)
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Something went wrong..'
+			  })
+	})
+	}
+	else {
+		Swal.fire({
+			icon: 'error',
+			title: 'Error...',
+			text: 'Wrong Password..'
+		  })
+	 }
+ }
+})
+
 app.controller('LogInController',function($scope,$http,$window,$state){
+
+    // var arr = ["Srijan", "Keshav", "Saurabh", "Mayank", "Swapnil", "Sukriti", "Ananya", "Siddharth", "Amritansh"];
+
+    // for(var i=0;i<arr.length;i++){
+	// var count = 0;
+	// var random = Math.floor(Math.random()*arr.length);
+    // var name = console.log(random, arr[random]);
+    //   for(var j=0;j<name;j++){
+	// 	count++;
+    //     count = arr[i]
+	// 	if(count == )
+    //      console.log( count)
+    //     }
+    // }
 
 	 $scope.login = function(){
 
@@ -206,14 +369,14 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		    console.log(msg)
 		
 		    if(msg === 'Receptionist'){
-		    	$state.go('ReceptionDashboard')
+		    	$state.go('ReceptionDashboard.Patient')
 		    }
 		    else if(msg === 'Doctor') 
             {
-		        $state.go('DoctDashboard');
+		        $state.go('DoctDashboard.Information');
 		    }
 		    else {
-		    	$state.go('Dashboard')
+		    	$state.go('Dashboard.PatientInfo')
 		    }
 			Swal.fire({
 				icon: 'success',
@@ -222,7 +385,6 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			  })
 		  })
 		  .catch(function(error){
-			// $window.alert(error);
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
@@ -231,6 +393,8 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		  })
 		}
 	 } );
+
+                                     //* Patient *//
 
 	 app.controller('DashboardPatController',function($scope,$http,$window,$state){
 		$scope.patients = [];
@@ -243,8 +407,6 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			 console.log(response);
 			 $scope.panels = response.data
 			 console.log($scope.panels)
-			//  console.log($scope.patient[0].first_name)
-	
 		})
 		.catch(function(error){
 			Swal.fire({
@@ -253,6 +415,28 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 				text: 'Something went wrong..'
 			  })
 		})
+
+		$scope.logout = function(){
+    
+			$http.get(api+ 'logout_view/', {
+				withCredentials: true
+			})
+			.then(function(response){
+				console.log(response)
+				Swal.fire({
+					position: 'centre',
+					icon: 'success',
+					title: response.data.message,
+					showConfirmButton: false,
+					timer: 1500
+				  })
+				  $state.go('LogIn')
+			})
+			.catch(function(error){
+				console.log(error)
+			})
+		}
+
 	 });
 
 	 app.controller('AppointmentController',function($scope,$http,$window,$state){
@@ -309,7 +493,6 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		
 		$scope.appoint = function(){
 			var apdata = {
-				// amount : $scope.amount,
 				doctor_id : $scope.selectcategory,
 				paymentStatus : $scope.paystatus,
 				medical_history : $scope.history,
@@ -360,85 +543,11 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		)
 	 });
 
-	 app.controller('DoctRegistrationController',function($scope,$http,$window,$state){
-		$scope.depart = [];
-		$scope.departs = [];
-
-		$scope.validatePassword = function(){
-			$scope.passwordMismatch = $scope.password !== $scope.confpass;
-		  }
-
-		  var pass = $scope.password;
-		  var confo = $scope.confpass;
-
-		$http.get(api+'Doctor_Department/', {
-			withCredentials : true
-		})
-		.then(function(response){
-			console.log(response);
-			$scope.depart = response.data
-			console.log($scope.depart)
-		})
-
-		
-		$scope.doctregister = function(){
-
-			var doctdata = {
-				username : $scope.username,
-				first_name : $scope.firstname,
-				last_name : $scope.lastname,
-				email : $scope.email,
-				doctor_fees : $scope.fees,
-				password : $scope.password,
-				phone_no : $scope.contact,
-				department_id : $scope.department,
-				qualification : $scope.qualification,
-				morning_time : $scope.morningtime,
-				evening_time : $scope.eveningtime
-			}
-			console.log(doctdata)
-
-			if(pass === confo){
-
-
-		$http.post(api+'DoctorRegistration/' , doctdata, {
-			withCredentials : true
-		})
-		.then(function(response){
-			console.log(response);
-			$scope.departs = response.data;
-			console.log($scope.departs);
-			Swal.fire({
-				icon: 'success',
-				title: 'Congrats',
-				text: 'You are Logged in..'
-			  })
-			  $state.go('LogIn')
-		})
-		.catch(function(error){
-			console.log(error)
-				Swal.fire({
-					icon: 'error',
-					title: 'Oops...',
-					text: 'Something went wrong..'
-				  })
-		})
-	    }
-		else {
-			Swal.fire({
-				icon: 'error',
-				title: 'Error...',
-				text: 'Wrong Password..'
-			  })
-		 }
-	 }
-	})
-
 
 	app.controller('PatientRecoController',function($scope,$http,$window,$state){
 		$scope.record = [];
 
-		$http.get(api+'patient/', {
+		$http.get(api+'patient_previous_appointments/', {
 			withCredentials: true
 		})
 		.then(function(response){
@@ -460,13 +569,10 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			const doc = document.createElement('table');
 			doc.innerHTML = table.outerHTML;
 
-			// Convert the HTML document to a blob
 			const blob = new Blob(['\ufeff', doc.outerHTML], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
-			// Create a URL for the blob
 			const url = window.URL.createObjectURL(blob);
 
-			// Create a download link and trigger the click event
 			const a = document.createElement('a');
 			a.href = url;
 			a.download = 'Records.xlsx';
@@ -478,27 +584,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		};
 	})
 
-
-	app.controller('DoctInformationController',function($scope,$http,$window,$state){
-		$scope.doct = [];
-
-		$http.get(api+'doctor_profile/', {
-			withCredentials: true
-		})
-		.then(function(response){
-			console.log(response)
-			$scope.doct = response.data;
-			console.log($scope.doct);
-		})
-		.catch(function(error){
-			console.log(error)
-			Swal.fire({
-				icon: 'error',
-				title: 'Oops...',
-				text: 'Something went wrong..'
-			  })
-		})
-	});
+	                                  //* RECEPTIONIST *//
 
 	app.controller('RecepDashboardController',function($scope,$http,$window,$state){
         $scope.panel = [];
@@ -519,6 +605,28 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 				text: 'Something went wrong..'
 			  })
 		})
+
+
+		$scope.logout = function(){
+    
+		$http.get(api+ 'logout_view/', {
+			withCredentials: true
+		})
+		.then(function(response){
+			console.log(response)
+			Swal.fire({
+				position: 'centre',
+				icon: 'success',
+				title: response.data.message,
+				showConfirmButton: false,
+				timer: 1500
+			  })
+			  $state.go('LogIn')
+		})
+		.catch(function(error){
+			console.log(error)
+		})
+	}
 	});
 
 	app.controller('RecepRegisterController',function($scope,$http,$window,$state){
@@ -599,7 +707,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 
 
 	app.service('SharedDataService', function () {
-		this.reasonInput = ""; // Initialize the shared variable
+		this.reasonInput = ""; 
 	});
 
 	app.controller('ModalAppointController', function ($scope, $http, $window, $state, SharedDataService) {
@@ -636,14 +744,12 @@ app.controller('LogInController',function($scope,$http,$window,$state){
   app.service('SharedData2Service', function () {
 	this.date = "";
 	this.time = "";
-	this.reason = ""; // Initialize the shared variable
+	this.reason = ""; 
 });
 
   app.controller('Modal2Controller', function ($scope, $http, $window, $state, SharedData2Service) {
 	$scope.reason = ""; 
 	$scope.reason = SharedData2Service.reason;
-	// $scope.date = SharedData2Service.reason
-	// $scope.time = SharedData2Service.reason
 
 	$scope.submit = function (appoint) {
 	  var data = {
@@ -719,8 +825,19 @@ app.controller('LogInController',function($scope,$http,$window,$state){
    
 	app.controller('RecepPatientController',function($scope,$http,$window,$state){
 		$scope.pat = [];
-
+		$scope.records=[];
 		$scope.searchText = " ";
+
+		$http.get(api + 'graph/', {
+			withCredentials: true
+		})
+		.then(function(response){
+			console.log(response.data)
+			$scope.records = response.data
+		})
+		.catch(function(error){
+			console.log(error)
+		})
 
 		$http.get(api + 'receptionist_patients/', {
 			withCredentials: true
@@ -740,6 +857,8 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		})
 
 	});
+
+	                              //*  DOCTOR  *//
 	
 	app.controller('DoctDashboardController',function($scope,$http,$window,$state){
 		$scope.dashes = [];
@@ -751,6 +870,49 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			console.log(response)
 			$scope.dashes = response.data;
 			console.log($scope.dashes)
+		})
+		.catch(function(error){
+			console.log(error)
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Something went wrong..'
+			  })
+		})
+
+		$scope.logout = function(){
+    
+			$http.get(api+ 'logout_view/', {
+				withCredentials: true
+			})
+			.then(function(response){
+				console.log(response)
+				Swal.fire({
+					position: 'centre',
+					icon: 'success',
+					title: response.data.message,
+					showConfirmButton: false,
+					timer: 1500
+				  })
+				  $state.go('LogIn')
+			})
+			.catch(function(error){
+				console.log(error)
+			})
+		}
+		
+	});
+
+	app.controller('DoctInformationController',function($scope,$http,$window,$state){
+		$scope.doct = [];
+
+		$http.get(api+'doctor_profile/', {
+			withCredentials: true
+		})
+		.then(function(response){
+			console.log(response)
+			$scope.doct = response.data;
+			console.log($scope.doct);
 		})
 		.catch(function(error){
 			console.log(error)
@@ -845,14 +1007,14 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 
 
 	app.service('SharedDataService', function () {
-		this.reason = ""; // Initialize the shared variable
+		this.reason = ""; 
 	});
 
 	app.controller('ModalController', function ($scope, $http, $window, $state, SharedDataService) {
 		$scope.reason= ""; 
 		$scope.reason = SharedDataService.reason;
 
-		$scope.submit = function (appoint) {
+		$scope.submit = function() {
 		  var data = {
 			patient_id : rejectid,
 			rejection_reason: $scope.reason,
@@ -885,7 +1047,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
   app.service('SharedData2Service', function () {
 	this.date = "";
 	this.time = "";
-	this.reason = ""; // Initialize the shared variable
+	this.reason = ""; 
 });
 
   app.controller('Modal2Controller', function ($scope, $http, $window, $state, SharedData2Service) {
@@ -952,8 +1114,6 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 
 	app.service('SharedData3Service', function () {
 		this.diagnosis = "";
-		// this.diagnosis = SharedDataService.diagnosis;
-		// diago = $scope.diagnosis
 	});
 
 	app.controller('ModalPrescController', function ($scope, $http, $window, $state, SharedData3Service) {
@@ -1013,7 +1173,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 		
 	});
 
-
+                                   //* PRESCRIPTIONS
 
 app.controller('PrescriptionController', function ($scope, $http, $window, $state) {
     $scope.presc = [];
@@ -1029,8 +1189,6 @@ app.controller('PrescriptionController', function ($scope, $http, $window, $stat
 		console.log(error)
 	})
 
-
-
 	$scope.download = function() {
 		const printContent = document.getElementById("pdf");
             const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
@@ -1043,20 +1201,38 @@ app.controller('PrescriptionController', function ($scope, $http, $window, $stat
 })
 
 app.controller('PaymentController', function ($scope, $http, $sce, $window, $state) {
-	$http.post(api + 'payment_history/', {payement_id : 12},{
+    $scope.amount = [];
+
+	$http.get(api + 'payment_history/', {
+		withCredentials: true
+	})
+	.then(function(response){
+		console.log(response.data)
+		$scope.amount = response.data
+		var ids = response.data
+
+		$scope.view = function(patient){
+			var data = {payement_id : patient.id}
+			console.log(data)
+	$http.post(api + 'payment_history/',data ,{
 		headers: {'Content-Type': undefined},
 		withCredentials : true
 	})
 	.then(function (response) {
 		console.log(response.data);
 
-		$scope.view = function(){
+		// $scope.view = function(){
 				$scope.paymentpage = $sce.trustAsHtml(response.data);
-		}
+		// }
 	})
 	.catch(function (error) {
 		console.log(error)
 	})
+  }
+})
+.catch(function(error) {
+	console.log(error)
+})
 
 	$scope.downloadpdf = function() {
 		const printContent = document.getElementById("paymentrecord");
@@ -1068,4 +1244,4 @@ app.controller('PaymentController', function ($scope, $http, $sce, $window, $sta
             WindowPrt.close();
 	}
 })
-		  
+		  	
