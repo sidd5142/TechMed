@@ -178,18 +178,6 @@ app.controller('HomeController',function($scope,$http,$window,$state){
 });
 
 app.controller('RegistrationController',function($scope,$http,$window,$state){
-	$scope.Registrationfrom = function(){
-        console.log('FirstName :', $scope.firstname)
-		console.log('LstName :', $scope.lastname)
-		console.log('Username : '	, $scope.username)
-		console.log('Email:', $scope.email)
-		console.log('Pass :', $scope.password)
-		console.log('ConfPass :', $scope.confpassword)
-		console.log('Contact :', $scope.contact)
-		console.log('Age :', $scope.age)
-		console.log('Address :', $scope.address)
-		console.log('Gender :', $scope.gender)
-	}
 
 	$scope.validatePassword = function(){
 		$scope.passwordMismatch = $scope.password !== $scope.confpass;
@@ -243,7 +231,7 @@ app.controller('RegistrationController',function($scope,$http,$window,$state){
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
-				text: 'Something went wrong..'
+				text: error.data.message
 			  })
 		  })
 		}
@@ -267,8 +255,19 @@ app.controller('DoctRegistrationController',function($scope,$http,$window,$state
 		$scope.passwordMismatch = $scope.password !== $scope.confpass;
 	  }
 
+	  $scope.validateEmail = function () {
+		var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+		if (emailPattern.test($scope.email)) {
+			$scope.emailIsValid = true;
+		} else {
+			$scope.emailIsValid = false;
+		}
+	};
+
 	  var pass = $scope.password;
 	  var confo = $scope.confpass;
+	  var validemail = $scope.emailIsValid
 
 	$http.get(api+'Doctor_Department/', {
 		withCredentials : true
@@ -297,7 +296,7 @@ app.controller('DoctRegistrationController',function($scope,$http,$window,$state
 		}
 		console.log(doctdata)
 
-		if(pass === confo){
+		if(pass === confo && validemail){
 
 
 	$http.post(api+'DoctorRegistration/' , doctdata, {
@@ -319,7 +318,7 @@ app.controller('DoctRegistrationController',function($scope,$http,$window,$state
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
-				text: 'Something went wrong..'
+				text: error.data.message
 			  })
 	})
 	}
@@ -388,7 +387,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
-				text: 'Something went wrong..'
+				text: error.data.message
 			  })
 		  })
 		}
@@ -515,7 +514,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 				Swal.fire({
 					icon: 'error',
 					title: 'Oops...',
-					text: 'Something went wrong..'
+					text: error.data.message
 				  })
 			}
 			)
@@ -537,7 +536,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
-				text: 'Something went wrong..'
+				text: error.data.message
 			  })
 		}
 		)
@@ -560,7 +559,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
-				text: 'Something went wrong..'
+				text: error.data.message
 			  })
 		})
 
@@ -602,7 +601,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
-				text: 'Something went wrong..'
+				text: error.data.message
 			  })
 		})
 
@@ -645,7 +644,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
-				text: 'Something went wrong..'
+				text: error.data.message
 			  })
 		})
 
@@ -669,7 +668,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
-				text: 'Something went wrong..'
+				text: error.data.message
 			  })
 		})
 
@@ -696,7 +695,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 				Swal.fire({
 					icon: 'error',
 					title: 'Something Wrong...',
-					text: "Error"
+					text: error.data.message
 				  })
 			})
 		}
@@ -795,7 +794,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
-				text: 'Something went wrong..'
+				text: error.data.message
 			  })
 		})
 
@@ -852,7 +851,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
-				text: 'Something went wrong..'
+				text: error.data.message
 			  })
 		})
 
@@ -876,7 +875,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
-				text: 'Something went wrong..'
+				text: error.data.message
 			  })
 		})
 
@@ -919,7 +918,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
-				text: 'Something went wrong..'
+				text: error.data.message
 			  })
 		})
 	});
@@ -940,7 +939,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
-				text: 'Something went wrong..'
+				text: error.data.message
 			  })
 		})
 	})
@@ -965,7 +964,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			Swal.fire({
 				icon: 'error',
 				title: 'Oops...',
-				text: 'Something went wrong..'
+				text: error.data.message
 			  })
 		})
 
@@ -991,7 +990,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 				Swal.fire({
 					icon: 'error',
 					title: 'Oops...',
-					text: 'Something went wrong..'
+					text: error.data.message
 				  })
 			})
 		}
@@ -1165,7 +1164,7 @@ app.controller('LogInController',function($scope,$http,$window,$state){
 			Swal.fire({
 				icon: 'error',
 				title: 'cancel...',
-				text: 'Something went wrong'
+				text: error.data.message
 			  })
 			})
 		}

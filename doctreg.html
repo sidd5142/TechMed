@@ -128,8 +128,14 @@ top: 13px;
     
       
                       <div class="form-outline mb-4">
-                        <input type="text" id="form3Example97" ng-model="email" class="form-control form-control-lg" required/>
+                        <input type="text" id="form3Example97" ng-model="email" ng-change="validateEmail()" class="form-control form-control-lg" required/>
                         <label class="form-label" for="form3Example97">Email ID</label>
+                        <div ng-show="email == '' && !emailIsValid">
+                          <p style="color: red;">Invalid email format</p>
+                      </div>
+                      <div ng-show="emailIsValid">
+                          <p style="color: green;">Valid email format</p>
+                      </div>
                       </div>
 
                       <div class="form-outline mb-4">

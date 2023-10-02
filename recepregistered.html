@@ -22,7 +22,7 @@
             <div class="col">
                 <form class="d-flex">
                     <input class="form-control me-2 ml-auto" type="search" style="width: 25%; " placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <button class="btn btn-outline-success" type="submit" ng-model="search">Search</button>
                   </form>
             </div>
 
@@ -50,7 +50,7 @@
                  </tr>
                </thead>
                <tbody>
-                 <tr ng-repeat="record in register">
+                 <tr ng-repeat="record in register | filter:search">
                     <th scope="row">{{$index + 1}}</th>
                     <!-- <td>{{record.Patient}}</td> -->
                    <td>{{record.Patient__first_name + " " + record.Patient__last_name}}</td>
